@@ -1,0 +1,205 @@
+<template name="display_question">
+
+	<input type="hidden" val="{{_id}}" id="question_id" />
+
+	<div class="row">
+
+		<div class="col-sm-12 post-wrapper question-wrapper">
+
+			<div class="question-title">
+				{{title}}
+			</div>
+			
+					<div class="post-side">
+						<img class="post-profile-pic" src="http://pickaface.net/avatar/ppic.jpg" alt="{{username}}" />
+					</div>
+					
+					<div class="time-created">
+						<span>Asked</span> {{timeago created_timestamp}}
+					</div>
+
+					{{> post_action_bar}}
+
+					<div class="post-main">
+						<div class="post-username">
+							<a href="{{user_slugged username}}">{{username}}</a>
+						</div>
+
+						<div class="post-content">
+							{{content}}
+						</div>
+					</div>
+
+					<div class="clearfix"></div>
+
+		</div>
+
+		<div class="col-sm-12 comment-list">
+			{{#each comment}}
+				{{> comment_display}}
+			{{/each}}
+			{{#if currentUser}}
+				{{> comment_submission_form}}
+			{{/if}}
+			<input type="hidden" class="content-type-indicator" value="question">		
+		</div>
+
+
+		<div class="col-sm-12 tags-list-inline">
+			{{#each tags}}
+				<span>{{this}}</span>
+			{{/each}}
+		</div>
+
+	</div>
+		
+	<div class="row">
+		<div class="col-sm-8 answer-list">
+			
+			{{#each answer}}
+				<div class="post-wrapper answer-wrapper">
+
+					<div class="post-side">
+						<img class="post-profile-pic" src="http://pickaface.net/avatar/ppic.jpg" alt="{{username}}" />
+					</div>
+					
+					<div class="time-created">
+						<span>Answered</span> {{timeago created_timestamp}}
+					</div>
+
+
+					{{> post_action_bar}}
+
+					<div class="post-main">
+						<div class="post-username">
+							{{username}}
+						</div>
+
+						<div class="post-content">
+							{{content}}
+						</div>
+					</div>
+
+					<div class="clearfix"></div>
+
+				</div>
+
+				<div class="comment-list">
+					{{#each comment}}
+						{{> comment_display}}
+					{{/each}}
+
+					{{#if currentUser}}
+						{{> comment_submission_form}}	
+					{{/if}}
+					<input type="hidden" class="content-type-indicator" value="answer">
+				</div>
+
+			{{/each}}
+
+
+			{{#if currentUser}}
+				{{#if alreadyAnswered}}
+
+				{{else}}
+					<div class="answer-submission">
+						{{> answer_submission_form this}}
+					</div>
+				{{/if}}
+			{{/if}}
+		</div>
+
+	</div>
+
+</template>
+
+
+<template name="question_summary_item">
+	<div class="col-sm-4">
+		<div class="item-wrapper">
+			<div class="item-title">
+				<a href="{{pathFor 'question_display' params=this}}">{{title}}</a> by {{username}}
+			</div>
+
+			<div class="item-main">
+				<div class="tags-list-inline">
+					{{#each tags}}
+						<span>{{this}}</span>					
+					{{/each}}
+				</div>
+			</div>
+
+			<div class="time-created">
+				{{timeago created_timestamp}}
+			</div>
+		</div>
+
+	</div>
+
+</template>
+
+
+<template name="question_list_front_page">
+
+		{{#each questions}}
+
+		{{#if divides3 this.index}}
+			<div class="clearfix"></div>
+		{{/if}}
+
+		{{> question_summary_item this}}
+
+		
+		{{/each}}
+
+</template>
+
+
+<template name="post_action_bar">
+
+	<div class="post-action-bar">
+		<span>
+			{{vote_score}}
+		</span>
+		<span>
+			<i data-content-id="{{_id}}" data-increment="1" class="fa fa-thumbs-up post-thumbs"></i>
+			<i data-content-id="{{_id}}" data-increment="-1" class="fa fa-thumbs-down post-thumbs"></i>
+		</span>
+
+		<span class="post-add-comment">Edit</span>
+		<span class="post-add-comment">Add Comment</span>
+
+	</div>
+
+</template>
+
+
+<template name="create_question">
+			<form role="form">
+				<div class="form-group question-title-wrapper">
+					<label class="title_preview">Ask Question</label>
+					<input id="question_title_input" class="form-control" type="text" placeholder="Question title...">
+				</div>
+
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-6">
+							<textarea placeholder="Be as detailed and as concise as possible!" style="resize: vertical" id="question_content" class="form-control editor_enabled"></textarea>
+						</div>
+
+						<div class="col-md-6">
+							<div id="preview_output">Question preview will appear here.</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>Tags</label>
+					<input class="form-control" id="tag_input" type="text" placeholder="List some relevant tags like C++ or Maple story" />
+				</div>
+
+				<button id="post_question_button" type="submit" class="btn btn-success">Post my Question!</button>
+			</form>
+
+</template>

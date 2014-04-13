@@ -1,0 +1,25 @@
+.tag-title {
+	font-size: 20px;
+}
+
+	.tag-title span {
+		background-color: #888686;
+		padding: 0 5px;
+		margin: 0 4px;
+		color: #fff;
+		transition: all 0.2s ease-in-out;
+		-moz-transition: all 0.2s ease-in-out;
+		-webkit-transition: all 0.2s ease-in-out;
+		-o-transition: all 0.2s ease-in-out;
+		cursor: default;
+	}
+
+		.tag-title span:hover {
+			background-color: #ccc;
+			color: #000;
+		}
+
+.tag-description {
+	padding: 5px 0;
+	font-style: italic;
+}

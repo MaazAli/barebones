@@ -1,0 +1,37 @@
+<template name="comment_submission_form">
+
+	
+	<img class="comment-profile-pic" src="http://pickaface.net/avatar/ppic.jpg" alt="{{this.username}}" />
+	
+
+	<div class="comment-main">
+		<textarea class="comment-submission-input form-control" rows="1" placeholder="Comments are used for clarification, not discussions"></textarea>
+
+		<input class="comment_content_id" type="hidden" value="{{this._id}}" />
+
+		<div class="comment-char-counter"></div>
+	</div>
+
+
+</template>
+
+
+<template name="comment_display">
+	<img class="comment-profile-pic" src="http://pickaface.net/avatar/ppic.jpg" alt="{{this.username}}" />
+
+	<div class="comment-main">
+		<div class="comment-username">
+			{{this.username}}
+		</div>
+
+		<div class="comment-content">
+			{{this.content}}
+		</div>
+
+		<div class="comment-control">
+			<span>
+				{{timeago this.created_timestamp}}
+			</span>
+		</div>
+	</div>
+</template>

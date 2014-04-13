@@ -1,0 +1,75 @@
+<template name="page_layout">
+	{{> yield region='header'}}
+	
+	<div class="container" style="padding-top: 100px">
+		<div class="row">
+		
+			<div class="col-sm-8">
+				{{> yield}}
+			</div>
+
+			<div class="col-sm-4">
+				{{> yield region='sidebar'}}
+			</div>
+		</div>
+	</div>
+
+	{{> yield region='footer'}}
+
+</template>
+
+
+<template name="profile_layout">
+
+	{{> yield region='header'}}
+	
+	<div class="container" style="padding-top: 100px">
+		{{> yield region='profile_cover'}}
+
+		<div class="row">		
+
+			<div class="col-sm-8">
+				{{> yield}}
+			</div>
+
+			<div class="col-sm-4">
+				{{> yield region='sidebar'}}
+			</div>
+
+		</div>
+
+	</div>
+
+	{{> yield region='footer'}}
+
+</template>
+
+
+<template name="home_layout">
+	{{> yield region='header'}}
+	
+	<div class="container" style="padding-top: 100px;">
+		<div class="row">
+			<div class="col-sm-12">
+				{{> yield}}
+			</div>
+		</div>
+	</div>
+
+	{{> yield region='footer'}}
+
+
+</template>
+
+
+<template name="question_layout">
+
+	{{> yield region='header'}}
+	
+	<div class="container" style="padding-top: 90px">
+		{{> yield}}
+	</div>
+	
+	{{> yield region='footer'}}
+
+</template>

@@ -1,0 +1,30 @@
+<template name="profile_cover">
+
+	<div class="profile-cover-wrapper" style="background: url('http://aaronpogue.com/wp-content/uploads/2013/02/site_header.jpg');">
+
+
+		<div class="member-glance">
+			<img class="profile-picture" src="{{profile.avatar.url}}" />
+			<div class="profile-username">{{username}}</div>
+		</div>
+
+		<div class="cover-shadow"></div>
+	</div>
+
+</template>
+
+
+
+<template name="profile_main">
+
+	<div class="profile-main">
+
+		<div class="title">Recent Questions by {{username}}</div>
+		{{#each recent_questions}}
+			<div class="question-list-item">
+				<a href="{{pathFor 'question_display' params=this}}">{{title}}</a>
+			</div>
+		{{/each}}
+	</div>
+
+</template>

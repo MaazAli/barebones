@@ -1,0 +1,66 @@
+<template name="register_form">
+
+	<form class="form-horizontal" role="form">
+
+		<div class="form-group">
+			<label for="register_name" class="col-sm-2 control-label">Name</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="register_name" placeholder="This is the name that will be shown in public.">
+	    	</div>
+	    </div>
+
+		<div class="form-group">
+			<label for="register_email" class="col-sm-2 control-label">Email</label>
+			<div class="col-sm-10">
+				<input type="email" class="form-control" id="register_email" placeholder="Email">
+	    	</div>
+	    </div>
+
+		<div class="form-group">
+			<label for="register_password" class="col-sm-2 control-label">Password</label>
+			<div class="col-sm-10">
+				<input type="password" class="form-control" id="register_password" placeholder="Password">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="register_password" class="col-sm-2 control-label">Confirm Password</label>
+			<div class="col-sm-10">
+				<input type="password" class="form-control" id="register_confirm_password" placeholder="Confirm Password">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label id="gender_choice_label" class="col-sm-2 control-label">Gender</label>
+			<div class="col-sm-10">
+				<div class="radio">
+					<label>
+						<input name="gender" type="radio" value="male"> Male
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input name="gender" type="radio" value="female"> Female
+					</label>
+				</div>
+				<div class="radio">
+					<label>
+						<input name="gender" type="radio" value="unspecified"> (unspecified)
+					</label>
+				</div>
+			</div>
+		</div>		
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Verification</label>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+	    		<button id="register_button" type="submit" class="btn btn-default">Register</button>
+			</div>
+		</div>
+
+	</form>
+
+</template>

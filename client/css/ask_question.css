@@ -1,0 +1,9 @@
+.title_preview {
+	font-size: 20px;
+	padding: 10px 0;
+}
+
+	.title_preview span {
+		color: #868686;
+		font-weight: normal;
+	}

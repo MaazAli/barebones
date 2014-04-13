@@ -1,0 +1,10 @@
+<template name="answer_submission_form">
+	<div class="form-group">
+		<label> Post your Answer </label>
+		<textarea placeholder="Please be as descriptive as possible, and backup your claims" id="answer_content_form" class="form-control editor_enabled" ></textarea>
+		<input type="hidden" id="question_id" value="{{this._id}}" />
+	</div>
+
+
+	<button id="post_answer_button" type="submit" class="btn btn-success">Post my Answer!</button>
+</template>
