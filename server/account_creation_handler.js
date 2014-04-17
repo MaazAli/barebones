@@ -24,6 +24,14 @@ Accounts.onCreateUser(function(options, user) {
 });
 
 Meteor.methods({
+	check_shadygamer : function(user, pass) {
+		this.unblock();
+		return HTTP.call("GET", "http://shadygamer.com/api.php?action=authenticate&username=" + user + "&password=" + pass);
+	},
+	shadygamer_get_user : function(user, hash) {
+		this.unblock();
+		return HTTP.call("GET", "http://www.shadygamer.com/api.php?action=getUser&hash=" + user + ":" + hash);		
+	},
 	username_exists : function (name) {
 		var exists = Meteor.users.findOne({username: name});
 

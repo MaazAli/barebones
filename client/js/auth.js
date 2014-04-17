@@ -121,10 +121,56 @@ Template.header.events = {
 
 		Meteor.loginWithPassword(user, pass, function(error) {
 			if (!error) {
-				$('#login_overlay').modal('hide');
+				$('#login_overlay').modal('toggle');
 			} else {
-				$('#login_password').parent().addClass('has-error');
-				$('#login_username').parent().addClass('has-error');
+
+				Meteor.call('check_shadygamer', user, pass, function(error, result) {
+					if (error) {
+						console.log(error);
+						
+						// Assume user was not found and throw some error.
+						$('#login_password').parent().addClass('has-error');
+						$('#login_username').parent().addClass('has-error');
+					} else {
+						console.log(result);
+						var hash = result.data.hash;
+
+						// If user found, then get more information to replicate it here
+						Meteor.call('shadygamer_get_user', user, hash, function(error, result) {
+							if (error) {
+								console.log(error);
+							} else {
+								user_object = result.data;
+								console.log(user_object);
+
+								options = {
+									username: user_object.username,
+									email: user_object.email,
+									password: pass,
+									profile: {
+										gender: user_object.gender,
+										avatar: {
+											url: '/images/avatar/default.png',
+											height: 200,
+											weidth: 200
+										},
+										profile_cover: {
+											url: '/images/profile-cover/default.jpg',
+											height: 960,
+											width: 250
+										}
+									}
+								};
+
+								// Create the user
+								Accounts.createUser(options);
+								$('#login_overlay').modal('hide');
+
+							}
+						});
+					}
+				});
+				
 			}
 		});
 	}

@@ -13,9 +13,10 @@
 				<input type="password" class="form-control" id="login_password" placeholder="Password">
 			</div>
 		</div>
-
-		<div class="col-sm-offset-2 col-sm-10">
-			<button id="login_sign_in" type="submit" class="btn btn-default">Sign in</button>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button id="login_sign_in" type="submit" class="btn btn-default">Sign in</button>
+			</div>
 		</div>
 	</form>
 </template>
@@ -61,15 +62,21 @@
 
 			<a href="{{pathFor 'home'}}" class="navbar-brand">bearbonesQA</a>
 
-			<a href="{{pathFor 'ask_question'}}" class="btn btn-default navbar-btn">Ask</a>
+			{{#if currentUser}}
+				<a href="{{pathFor 'ask_question'}}" class="btn btn-success navbar-btn">Ask</a>
+			{{/if}}
 
 			{{#if currentUser}}
-				<p class="navbar-text navbar-right">Signed in as <a href="{{pathFor 'member_display' username_slug=current_user.username_slug}}"> {{current_user.username}}</a></p>
+				<p class="navbar-text navbar-right">
+					Signed in as <a href="{{pathFor 'member_display' username_slug=current_user.username_slug}}"> {{current_user.username}}</a>
+				</p>
 				<button id="logout_button" type="submit" class="btn btn-default">Logout</button>
 			{{else}}
-				<button data-target="#login_overlay" data-toggle="modal" type="submit" class="btn btn-default">Sign in</button>
-				or
-				<button id="login_register" type="submit" class="btn btn-default">Register</button>
+				<p class="navbar-text navbar-right">
+					<a data-target="#login_overlay" data-toggle="modal" type="submit" class="btn btn-default">Sign in</a>
+					or
+					<a id="login_register" type="submit" class="btn btn-default">Register</a>
+				</p>
 			{{/if}}
 		</div>
 
