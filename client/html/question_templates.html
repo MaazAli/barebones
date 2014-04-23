@@ -11,7 +11,7 @@
 			</div>
 			
 					<div class="post-side">
-						<img class="post-profile-pic" src="http://pickaface.net/avatar/ppic.jpg" alt="{{username}}" />
+						<img class="post-profile-pic" src="{{get_user_profile_picture this.user_id}}" alt="{{this.username}}" />
 					</div>
 					
 					<div class="time-created">
@@ -60,7 +60,7 @@
 				<div class="post-wrapper answer-wrapper">
 
 					<div class="post-side">
-						<img class="post-profile-pic" src="http://pickaface.net/avatar/ppic.jpg" alt="{{username}}" />
+						<img class="post-profile-pic" src="{{get_user_profile_picture this.user_id}}" alt="{{username}}" />
 					</div>
 					
 					<div class="time-created">
@@ -113,7 +113,10 @@
 
 </template>
 
+<template name="question_summary_item_full">
 
+
+</template>
 <template name="question_summary_item">
 	<div class="col-sm-4">
 		<div class="item-wrapper">
@@ -135,6 +138,14 @@
 		</div>
 
 	</div>
+
+</template>
+
+<template name="question_list_front_page_full">
+
+	{{#each questions}}
+		{{> question_summary_item this}}
+	{{/each}}
 
 </template>
 
@@ -161,13 +172,16 @@
 		<span>
 			{{vote_score}}
 		</span>
-		<span>
-			<i data-content-id="{{_id}}" data-increment="1" class="fa fa-thumbs-up post-thumbs"></i>
-			<i data-content-id="{{_id}}" data-increment="-1" class="fa fa-thumbs-down post-thumbs"></i>
-		</span>
 
-		<span class="post-add-comment">Edit</span>
-		<span class="post-add-comment">Add Comment</span>
+		{{#if currentUser}}
+			<span>
+				<i data-content-id="{{_id}}" data-increment="1" class="fa fa-thumbs-up post-thumbs"></i>
+				<i data-content-id="{{_id}}" data-increment="-1" class="fa fa-thumbs-down post-thumbs"></i>
+			</span>
+
+			<span class="post-add-comment">Edit</span>
+			<span class="post-add-comment">Add Comment</span>
+		{{/if}}
 
 	</div>
 

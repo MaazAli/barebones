@@ -1,10 +1,19 @@
 <template name="answer_submission_form">
-	<div class="form-group">
-		<label> Post your Answer </label>
-		<textarea placeholder="Please be as descriptive as possible, and backup your claims" id="answer_content_form" class="form-control editor_enabled" ></textarea>
-		<input type="hidden" id="question_id" value="{{this._id}}" />
+
+	<div class="post-side">
+		<img class="post-profile-pic" src="{{get_user_profile_picture currentUser._id}}" alt="{{currentUser.username}}" />
 	</div>
 
+	<div class="answer-submission-main">
+		<div class="form-group">
+			<label> Post your Answer </label>
+			<textarea placeholder="Please be as descriptive as possible, and backup your claims" id="answer_content_form" class="form-control editor_enabled" ></textarea>
+			<input type="hidden" id="question_id" value="{{this._id}}" />
+		</div>
 
-	<button id="post_answer_button" type="submit" class="btn btn-success">Post my Answer!</button>
+
+		<button style="float:right" id="post_answer_button" type="submit" class="btn btn-success">Post my Answer!</button>
+		<div class="clearfix"></div>
+	</div>
+
 </template>

@@ -140,6 +140,9 @@ Template.header.events = {
 							if (error) {
 								console.log(error);
 							} else {
+								$('#login_overlay').modal('hide');
+								$('#login_sync_additional').modal('show');
+
 								user_object = result.data;
 								console.log(user_object);
 
@@ -164,7 +167,6 @@ Template.header.events = {
 
 								// Create the user
 								Accounts.createUser(options);
-								$('#login_overlay').modal('hide');
 
 							}
 						});
@@ -173,6 +175,37 @@ Template.header.events = {
 				
 			}
 		});
+	},
+
+	'focusout #login_password' : function(event) {
+		var user = $('#login_username').val();
+		var pass = $('#login_password').val();	
+		console.log('Password out');	
+		if (user != '' && pass != '') {
+			Meteor.call('check_shadygamer', user, pass, function(error, result) {
+
+				var sync_email_exists = $('#sync_email').attr('data-check');
+				console.log(sync_email_exists)
+				if (error) {
+					console.log(error);
+				} else if(!sync_email_exists) {
+					console.log($('#sync_email123'));
+					var another_field = 
+										'<div class="form-group">\
+											<label class="col-sm-2 control-label" for="sync_email">\
+												Sync Email\
+											</label>\
+								    			<div class="col-sm-10">\
+								        			<input data-check="true" id="sync_email" class="form-control" type="email" placeholder="' + user + ', we could not sync your email, please put it here"></input>\
+								    			</div>\
+										</div>';
+					$('#login_overlay .form-horizontal').append(another_field);
+					$('#login_sign_in').parent().parent().appendTo( $('#login_overlay .form-horizontal'));
+				}
+
+			});
+		}
+
 	}
 
 

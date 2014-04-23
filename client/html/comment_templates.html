@@ -1,7 +1,7 @@
 <template name="comment_submission_form">
 
 	
-	<img class="comment-profile-pic" src="http://pickaface.net/avatar/ppic.jpg" alt="{{this.username}}" />
+	<img class="comment-profile-pic" src="{{get_user_profile_picture currentUser._id}}" alt="{{currentUser.username}}" />
 	
 
 	<div class="comment-main">
@@ -17,7 +17,7 @@
 
 
 <template name="comment_display">
-	<img class="comment-profile-pic" src="http://pickaface.net/avatar/ppic.jpg" alt="{{this.username}}" />
+	<img class="comment-profile-pic" src="{{get_user_profile_picture this.user_id}}" alt="{{this.username}}" />
 
 	<div class="comment-main">
 		<div class="comment-username">

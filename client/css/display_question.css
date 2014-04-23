@@ -111,7 +111,7 @@
 	border-top: none;
 	border-bottom-left-radius: 3px;
 	border-bottom-right-radius: 3px;
-
+	margin-bottom: 15px;
 }
 	.comment-list:empty {
 		display: none;
@@ -128,6 +128,10 @@
 
 	.comment-submission-textarea {
 		padding-left: 40px;
+	}
+
+	.textarea.form-control {
+		height: 34px;
 	}
 
 	.comment-main {
@@ -214,12 +218,40 @@
 /* Answer list related */
 
 .answer-submission {
+	padding: 10px 0;
 }
 
 .answer-submission label {
 	font-size: 16px;
 	padding-bottom: 5px;
 }
+
+.answer-submission-main {
+	position: relative;
+	margin-left: 100px;
+	box-shadow: 1px 1px 3px #BEBEBE;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	padding: 15px;
+	border: 1px solid rgba(221, 221, 221, 0.62);
+	transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	background-color: #fff;
+}
+	.answer-submission-main:before {
+	    border-top: 10px solid transparent;
+	    border-bottom: 10px solid transparent;
+	    border-right: 10px solid rgba(254, 254, 254, 1);
+	    content: " ";
+	    position: absolute;
+	    top: 0;
+	    width: 0px;
+	    height: 0px;
+	    left: -10px;
+}	
+	}
 
 /* Question summary (Item Display) */
 
