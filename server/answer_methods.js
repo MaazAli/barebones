@@ -38,6 +38,76 @@ Meteor.methods({
 	},
 	increment_comment_count_answer: function (id) {
 		Answers.update({_id: id}, {$inc: {comment_count: 1}});
+	},
+	update_vote_count_answer: function(user_id, increment_by, answer_id) {
+		// increment_by could be a negative amount.
+		// Returns false on failure and true on success.
+
+
+		var answer = Answers.findOne({_id: answer_id});
+		var users_voted = answer.users_voted;
+		var check = users_voted.map(function(e) { return e.user_id; }).indexOf(user_id);
+		increment_by = parseInt(increment_by);
+		console.log(check);
+
+		if (check == -1) {
+
+			Answers.update({_id: answer_id}, {$inc: {vote_score: increment_by}});
+			
+			user_object = {};
+
+ 
+			if (increment_by == 1) {
+				user_object.user_id = user_id;
+				user_object.score = "up";
+			} else {
+				user_object.user_id = user_id;
+				user_object.score = "down";
+			}
+
+
+			console.log(user_object);
+			// Add the user's id as well 
+			Answers.update({_id: answer_id}, {$push: {users_voted: user_object}});
+			return "added";
+
+		} else if (check != -1) {
+
+			var u_object = users_voted[check];
+
+			if (increment_by == 1 && u_object.score == "down") {
+
+				u_object.score = "up";
+				Answers.update({_id: answer_id}, {$inc: {vote_score: 2}}); // Going from negative rating to positive. So remove the negative, and add a positive = 2 :)
+				var object_container = {};
+				object_container["users_voted." + check] = u_object;
+				Answers.update({_id: answer_id}, {$set: object_container});
+
+				return "switched";
+
+			} else if (increment_by == -1 && u_object.score == "up") {
+
+				u_object.score = "down";
+				Answers.update({_id: answer_id}, {$inc: {vote_score: -2}}); // Going from positive to negative. Remove the positive, then add a negative = -2 :D
+				var object_container = {};
+				object_container["users_voted." + check] = u_object;
+				Answers.update({_id: answer_id}, {$set: object_container});
+
+				return "switched";
+
+			} else if (increment_by == 1 && u_object.score == "up") {
+				Answers.update({_id: answer_id}, {$inc: {vote_score: -1}});
+				Answers.update({_id: answer_id}, {$pull: {users_voted: u_object}});
+				return "removed";
+			} else if (increment_by == -1 && u_object.score == "down") {
+				Answers.update({_id: answer_id}, {$inc: {vote_score: 1}});
+				Answers.update({_id: answer_id}, {$pull: {users_voted: u_object}});	
+				return "removed";			
+			} else {
+				return "not updated";
+			}
+		}
+
 	}
 
 });

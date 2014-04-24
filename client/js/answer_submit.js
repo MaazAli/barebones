@@ -95,22 +95,37 @@ Template.answer_submission_form.events = {
 // 	}
 // }
 
-var update_post_thumbs = function() {
-	console.log(this.data._id);
+var update_post_thumbs = function(id) {
+	console.log(id);
 	if( ReactiveCookie.get('content_voted_user') ) {
 		var voted_content = JSON.parse(ReactiveCookie.get('content_voted_user'));
 
-		for (var id in voted_content) {
-			if (voted_content.hasOwnProperty(id)) {
+		console.log(voted_content);
+		var element_up = $('.post-action-bar').find("[data-content-id='" + id + "'][data-increment='1']" );;
+		var element_down = $('.post-action-bar').find("[data-content-id='" + id + "'][data-increment='-1']" );
+		if (id in voted_content) {
 
+			if (voted_content.hasOwnProperty(id)) {
+					var check_up = element_up.hasClass('thumbs-up');
+					var check_down = element_down.hasClass('thumbs-down');
+
+					// console.log("Check up: " + check_up);
+					// console.log("Check down: " + check_down);
+					
 				if (voted_content[id] == "up") {
-					var element = $('.post-action-bar').find("[data-content-id='" + id + "'][data-increment='1']" );
-					element.addClass('thumbs-up');
+					element_up.addClass('thumbs-up');
+					element_down.removeClass('thumbs-down');
 				} else if (voted_content[id] == "down") {
-					var element = $('.post-action-bar').find("[data-content-id='" + id + "'][data-increment='-1']" );
-					element.addClass('thumbs-down');
+					element_down.addClass('thumbs-down');
+					element_up.removeClass('thumbs-up');
 				}
 			}
+		}
+		console.log(voted_content[id]);
+		if(!(id in voted_content) && id != undefined) {
+			console.log("works");
+			element_down.removeClass('thumbs-down');
+			element_up.removeClass('thumbs-up');
 		}
 
 	} else {
@@ -134,14 +149,14 @@ Template.post_action_bar.events = {
 		// console.log(element);
 		// console.log(increment_by);
 
-		var question_id = element.attr('data-content-id');
+		var content_id = element.attr('data-content-id');
 		var user_id = Meteor.userId();
 
-		console.log(question_id);
+		console.log(content_id);
 
 		if (element.parents('.question-wrapper').length) {
 
-			Meteor.call('update_vote_count_question', user_id, increment_by, question_id, function(error, results) {
+			Meteor.call('update_vote_count_question', user_id, increment_by, content_id, function(error, results) {
 
 				if (error) {
 					console.log('Something went wrong :(');
@@ -153,38 +168,82 @@ Template.post_action_bar.events = {
 						} else {
 							cookie_object = {};
 						}
-						if (question_id in cookie_object && results == "switched") {
+						if (content_id in cookie_object && results == "switched") {
 
-							if(cookie_object[question_id] == "up") {
-								cookie_object[question_id] = "down";
+							if(cookie_object[content_id] == "up") {
+								cookie_object[content_id] = "down";
 							} else {
-								cookie_object[question_id] = "up";
+								cookie_object[content_id] = "up";
 							}
 							
-						} else if (question_id in cookie_object && results == "removed") {
+						} else if (content_id in cookie_object && results == "removed") {
 
-							delete cookie_object[question_id];
+							delete cookie_object[content_id];
 
 						} else if (results == "added") {
 
 							if (increment_by == 1) {
-								cookie_object[question_id] = "up";
+								cookie_object[content_id] = "up";
 							} else {
-								cookie_object[question_id] = "down";
+								cookie_object[content_id] = "down";
 							}
 
 						}
 
 
 						ReactiveCookie.set('content_voted_user', JSON.stringify(cookie_object), {days: 365});
-						update_post_thumbs();
+						update_post_thumbs(content_id);
 					}
 
 				}
 			});
 
 		} else if (element.parents('.answer-wrapper').length) {
-			console.log('Answer');
+			
+
+			Meteor.call('update_vote_count_answer', user_id, increment_by, content_id, function(error, results) {
+
+				if (error) {
+					console.log('Something went wrong :(');
+				} else {
+
+					if (results != "not updated") {
+						if (ReactiveCookie.get('content_voted_user')) {
+							var cookie_object = JSON.parse(ReactiveCookie.get('content_voted_user'));
+						} else {
+							cookie_object = {};
+						}
+						if (content_id in cookie_object && results == "switched") {
+
+							if(cookie_object[content_id] == "up") {
+								cookie_object[content_id] = "down";
+							} else {
+								cookie_object[content_id] = "up";
+							}
+							
+						} else if (content_id in cookie_object && results == "removed") {
+
+							delete cookie_object[content_id];
+
+						} else if (results == "added") {
+
+							if (increment_by == 1) {
+								cookie_object[content_id] = "up";
+							} else {
+								cookie_object[content_id] = "down";
+							}
+
+						}
+
+
+						ReactiveCookie.set('content_voted_user', JSON.stringify(cookie_object), {days: 365});
+						update_post_thumbs(content_id);
+					}
+
+				}
+			});
+
+
 		}
 
 
@@ -197,7 +256,8 @@ Template.post_action_bar.events = {
 
 Template.post_action_bar.rendered = function() {
 
-	update_post_thumbs();
+	console.log(this.data._id);
+	update_post_thumbs(this.data._id);
 	
 };
 
@@ -228,8 +288,6 @@ Template.display_question.alreadyAnswered = function() {
 Template.display_question.rendered = function() {
 
 	var site_title = "bearbones";
-
-	console.log(this);
 
 	//document.title = 
 
