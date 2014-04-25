@@ -192,11 +192,11 @@
 }
 
 	.tags-list-inline span {
+		color: #FAFAFA;
 		padding: 5px 10px;
-		background-color: #C2FF00;
+		background-color: #A2A2A2;
 		border-radius: 2px;
 		margin: 2px;
-		box-shadow: 0 0 2px #94C200;
 		transition: all 0.2s ease-in-out;
 		-moz-transition: all 0.2s ease-in-out;
 		-webkit-transition: all 0.2s ease-in-out;
@@ -210,9 +210,8 @@
 	}
 
 	.tags-list-inline span:hover {
-		box-shadow: 0 0 5px #94C200;
 		color: #fff;
-		background-color: #8CB800;
+		background-color: #009CB1;
 	}
 
 /* Answer list related */
@@ -249,36 +248,18 @@
 	    top: 0;
 	    width: 0px;
 	    height: 0px;
-	    left: -10px;
-}	
+	    left: -10px;	
 	}
 
 /* Question summary (Item Display) */
 
-.item-wrapper {
-	position: relative;
-	background-color: #fff;
-	padding: 10px;
-	margin: 10px 0;
-	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.21);
-	border: 1px solid #E9E9E9;
-	border-radius: 3px;
-}
 
 	.item-title {
 		font-size: 16px;
 	}
 
-	.item-wrapper .item-main .tags-list-inline {
-		padding: 10px 0;
-		padding-bottom: 20px;
-	}
 
 	.item-wrapper .item-main .tags-list-inline span {
 		font-size: 10px;
-		padding: 3px 5px;
-	}
-
-	.item-wrapper .time-created {
-		font-size: 12px;
+		padding: 2px 5px;
 	}

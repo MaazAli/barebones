@@ -52,3 +52,17 @@
 	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 	border-radius: 3px;
 }
+
+/*---- Profile Post -----*/
+
+.profile-post-side {
+	float: left;
+}
+
+.profile-post-main {
+	margin-left: 80px;
+}
+
+	.profile-post-main textarea {
+		min-height: 70px;
+	}

@@ -18,13 +18,30 @@
 <template name="profile_main">
 
 	<div class="profile-main">
-
+		{{> profile_post_submission_form}}
 		<div class="title">Recent Questions by {{username}}</div>
 		{{#each recent_questions}}
 			<div class="question-list-item">
 				<a href="{{pathFor 'question_display' params=this}}">{{title}}</a>
 			</div>
 		{{/each}}
+	</div>
+
+</template>
+
+
+<template name="profile_post_submission_form">
+	<div class="profile-post-side">
+		<a href="/members/{{user_slugged currentUser.username}}"><img class="profile-picture-m" src="{{get_user_profile_picture currentUser._id}}" /></a>
+	</div>
+	<div class="profile-post-main">
+
+		<div class="form-group">
+			<textarea class="form-control editor_enabled" id="profile_post_submission_form" maxlength="140" placeholder="{{profile_post_check username}}"></textarea>
+		</div>
+
+		<button style="float: right;" id="profile_post_submit" type="submit" class="btn btn-success">Post</button>
+		<div class="clearfix"></div>
 	</div>
 
 </template>

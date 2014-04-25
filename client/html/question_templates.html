@@ -118,22 +118,42 @@
 
 </template>
 <template name="question_summary_item">
-	<div class="col-sm-4">
+	<div class="col-sm-12">
 		<div class="item-wrapper">
-			<div class="item-title">
-				<a href="{{pathFor 'question_display' params=this}}">{{title}}</a> by {{username}}
+			<div class="question-summary-side">
+				<a href="/members/{{user_slugged username}}"><img class="profile-picture-m" src="{{get_user_profile_picture this.user_id}}" /></a>
 			</div>
 
-			<div class="item-main">
-				<div class="tags-list-inline">
-					{{#each tags}}
-						<span>{{this}}</span>					
-					{{/each}}
+			<div class="question-summary-main">
+				<div class="item-title">
+					<a href="{{pathFor 'question_display' params=this}}">{{title}}</a>
 				</div>
-			</div>
 
-			<div class="time-created">
-				{{timeago created_timestamp}}
+				<div class="question-summary-icons">
+					{{#if votes_positive vote_score}}
+						<span><i class="fa fa-thumbs-up"></i></span>{{vote_score}}
+					{{else}}
+						<span><i class="fa fa-thumbs-down"></i></span>{{vote_score}}
+					{{/if}}
+					<span><i class="fa fa-users"></i></span>{{view_count}}
+					<span><i class="fa fa-comments"></i></span>{{answer_count}}
+				</div>
+				<div class="question-summary-sub">
+					<div style="float:left">
+						<span><a href="/members/{{user_slugged username}}">{{username}}</a>,</span>
+						<span>{{timeago created_timestamp}}</span>
+					</div>
+
+					<div style="float:right">
+						<div class="item-main">
+							<div class="tags-list-inline">
+								{{#each tags}}
+									<span>{{this}}</span>					
+								{{/each}}
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
