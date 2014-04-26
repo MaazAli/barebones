@@ -21,12 +21,25 @@ Template.create_question.rendered = function() {
 			}
 		}
 	});
+
+	$('#post_question_button').prop('disabled', true);
+
 };
+
+var disable_question_submit = function(question_title, question_content, min_title, max_title, min_content) {
+
+		if (question_title.length < min_title || question_title.length > max_title || question_content.length < min_content ) {
+			$('#post_question_button').prop('disabled', true);
+		} else {
+			$('#post_question_button').prop('disabled', false);
+		}
+
+}
 
 Template.create_question.events = {
 
 	// For the title :)
-	'keypress #question_title_input' : function(event) {
+	'keyup, keypress, blur #question_title_input' : function(event) {
 		question_title = $('#question_title_input').val();
 
 		if (question_title) {
@@ -34,13 +47,31 @@ Template.create_question.events = {
 		} else {
 			$('.title_preview').html('Ask Question');
 		}
+
+		var min_title_length = 5;
+		var max_title_length = 75;
+		var min_question_content_length = 100;
+		var question_title = $('#question_title_input').val();
+		var question_content = $('#question_content').val();
+
+		disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length);
+
 	},
 
 
 	// For previewing the output
-	'keypress #question_content' : function(event) {
+	'keyup, keypress, blur #question_content' : function(event) {
 		var content = $('#question_content').val();
 		$('#preview_output').html(content);
+
+		var min_title_length = 5;
+		var max_title_length = 75;
+		var min_question_content_length = 100;
+		var question_title = $('#question_title_input').val();
+		var question_content = $('#question_content').val();
+
+		disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length);
+
 	},
 
 	'click #post_question_button' : function(event) {

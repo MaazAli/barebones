@@ -29,7 +29,22 @@ Template.answer_submission_form.events = {
 
 		}
 
+	},
+
+	'keypress, keyup, blur #answer_content_form' : function(event) {
+		var min_answer_content = 20;
+		var answer_content = $('#answer_content_form').val();
+
+		if (answer_content.length < min_answer_content) {
+			$('#post_answer_button').prop('disabled', true);
+		} else {
+			$('#post_answer_button').prop('disabled', false);
+		}
 	}
+}
+
+Template.answer_submission_form.rendered = function() {
+	$('#post_answer_button').prop('disabled', true);
 }
 
 // Template.comment_submission_form.events = {

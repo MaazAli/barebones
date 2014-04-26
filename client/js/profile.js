@@ -9,3 +9,59 @@ Template.profile_post_submission_form.profile_post_check = function(username) {
 		return "Write something...";
 	}
 }
+
+
+
+Template.profile_post_submission_form.rendered = function() {
+	$('#profile_post_submit').prop('disabled', true);
+}
+
+
+Template.profile_post_submission_form.events = {
+
+
+	'keyup, keypress, blur #profile_post_submission_input' : function(event) {
+		var content = $('#profile_post_submission_input').val();
+		var max_profile_post_length = 140;
+		if (content.length >= 1) {
+			$('#profile_post_submit').prop('disabled', false);
+		} else {
+			$('#profile_post_submit').prop('disabled', true);
+		}
+
+		$('.char-indicator').html(max_profile_post_length - content.length);
+	},
+
+	'click #profile_post_submit' : function(event) {
+		var max_profile_post_length = 140; 
+		var profile_post = $('#profile_post_submission_input').val();
+		var user_object = Meteor.user();
+		var username = user_object.username;
+		var user_id = user_object._id;
+		var profile_username = this.username;
+		var profile_user_id = this._id;
+
+		if (profile_post.length <= 140 && profile_post.length >= 1  && user_object) {
+			Meteor.call('create_profile_post', profile_username, profile_user_id, username, user_id, profile_post, function(error, results) {
+				if (error) {
+					console.log('create_profile_post error ' + error);
+					console.log('create_profile_post result ' + result);
+				} else {
+					console.log('Your profile post has been posted.');
+					$('#profile_post_submission_input').val('');
+				}				
+
+			});
+		}
+
+
+	}
+
+
+}
+
+
+Template.profile_main.profile_post = function() {
+	console.log(this._id);
+	return Profile_posts.find({profile_user_id: this._id}, {sort: {created_timestamp: -1}});
+};

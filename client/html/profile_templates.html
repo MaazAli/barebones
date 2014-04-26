@@ -19,6 +19,12 @@
 
 	<div class="profile-main">
 		{{> profile_post_submission_form}}
+
+		{{#each profile_post}}
+			{{> profile_post_item}}
+		{{/each}}
+
+
 		<div class="title">Recent Questions by {{username}}</div>
 		{{#each recent_questions}}
 			<div class="question-list-item">
@@ -31,17 +37,51 @@
 
 
 <template name="profile_post_submission_form">
-	<div class="profile-post-side">
-		<a href="/members/{{user_slugged currentUser.username}}"><img class="profile-picture-m" src="{{get_user_profile_picture currentUser._id}}" /></a>
-	</div>
-	<div class="profile-post-main">
+	<div class="profile-post-wrapper">
+		<div class="profile-post-side">
+			<a href="/members/{{user_slugged currentUser.username}}"><img class="profile-picture-m" src="{{get_user_profile_picture currentUser._id}}" /></a>
+		</div>
+		<div class="profile-post-main">
 
-		<div class="form-group">
-			<textarea class="form-control editor_enabled" id="profile_post_submission_form" maxlength="140" placeholder="{{profile_post_check username}}"></textarea>
+			<div class="form-group">
+				<textarea class="form-control editor_enabled" id="profile_post_submission_input" maxlength="140" placeholder="{{profile_post_check username}}"></textarea>
+			</div>
+
+			<div style="float: right;">
+				<div class="char-indicator">140</div>
+				<button id="profile_post_submit" type="submit" class="btn btn-success">Post</button>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+</template>
+
+<template name="profile_post_item">
+
+	<div class="profile-post-wrapper">
+		<div class="profile-post-side">
+			<a href="/members/{{user_slugged this.username}}"><img class="profile-picture-m" src="{{get_user_profile_picture this.user_id}}" /></a>
 		</div>
 
-		<button style="float: right;" id="profile_post_submit" type="submit" class="btn btn-success">Post</button>
+		<div class="profile-post-main">
+			<div class="profile-post-content">
+				<a href="/members/{{user_slugged this.username}}">{{this.username}}</a> {{this.profile_post_content}}
+			</div>
+
+			<div class="profile-post-sub">
+				<div style="float:left">
+					<span>{{timeago this.created_timestamp}}</span>
+				</div>
+
+				<div style="float:right">
+					<span><a>Like</a></span>
+					<span><a>Comment</a></span>
+				</div>
+			</div>
+		</div>
 		<div class="clearfix"></div>
 	</div>
+
 
 </template>

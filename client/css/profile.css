@@ -55,6 +55,10 @@
 
 /*---- Profile Post -----*/
 
+.profile-post-wrapper {
+	margin: 10px 0;
+}
+
 .profile-post-side {
 	float: left;
 }
@@ -66,3 +70,23 @@
 	.profile-post-main textarea {
 		min-height: 70px;
 	}
+
+	.profile-post-content {
+		min-height: 35px;
+		padding-top: 5px;
+	}
+
+	.profile-post-sub {
+		padding-top: 5px;
+		color: rgb(189, 189, 189);
+	}
+
+	.profile-post-sub span {
+		padding-right: 10px;
+	}
+
+.char-indicator {
+	display: inline;
+	font-size: 15px;
+	padding-right: 10px;
+}
