@@ -1,8 +1,9 @@
 .profile-cover-wrapper {
 	position: relative;
-	width: 960px;
+	max-width: 960px;
 	height: 250px;
 	overflow: hidden;
+	margin-bottom: 20px;
 }
 
 .cover-shadow {
@@ -32,23 +33,35 @@
 		width: 100px;
 		border-radius: 100px;
 		border: 5px solid #fff;
+		float: left;
 		/*box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);*/
 	}
 
 	.member-glance .profile-username {
-		display: inline;
-		position: absolute;
-		top: 0px;
 		padding: 5px 10px;
-		font-size: 17px;
+		font-size: 18px;
 		color: #fff;
 		text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+		margin-left: 100px;
+	}
+
+	.member-glance .profile-sub-info {
+		padding: 0px 10px;
+		color: #fff;
+		text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+		margin-left: 100px;
+	}
+
+	.member-glance .profile-follower-count {
+		padding: 0px 10px;
+		color: #fff;
+		text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+		margin-left: 100px;		
 	}
 
 .profile-main {
 	background-color: #fff;
 	padding: 20px;
-	margin-top: 20px;
 	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 	border-radius: 3px;
 }

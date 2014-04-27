@@ -6,6 +6,8 @@
 		<div class="member-glance">
 			<img class="profile-picture" src="{{profile.avatar.url}}" />
 			<div class="profile-username">{{username}}</div>
+			<div class="profile-sub-info">{{profile.gender}}, from {{profile.location}}</div>
+			<div class="profile-follower-count">{{follower_count}} followers</div>
 		</div>
 
 		<div class="cover-shadow"></div>
@@ -84,4 +86,25 @@
 	</div>
 
 
+</template>
+
+
+<template name="profile_sidebar">
+
+	<div class="profile-sidebar">
+		{{#if user_owns_profile ./username}}
+			
+		{{else}}
+
+			{{#if user_following ./_id}}
+				<button id="profile_unfollow" type="submit" class="btn btn-primary btn-sm btn-block">Unfollow</button>
+			{{else}}
+				<button id="profile_follow" type="submit" class="btn btn-primary btn-sm btn-block">Follow</button>
+			{{/if}}
+
+			<button id="profile_private_message" type="submit" class="btn btn-default btn-sm btn-block">Message</button>
+			<div class="clearfix"></div>
+		{{/if}}
+
+	</div>
 </template>

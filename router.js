@@ -161,7 +161,8 @@ Router.map( function() {
 		yieldTemplates: {
 			'header': {to: 'header'},
 			'footer': {to: 'footer'},
-			'profile_cover': {to: 'profile_cover'}
+			'profile_cover': {to: 'profile_cover'},
+			'profile_sidebar': {to: 'sidebar'}
 		},
 		waitOn : function () {
 			return Meteor.subscribe('all_users');

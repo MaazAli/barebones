@@ -9,6 +9,7 @@ Template.register_form.events = {
 		var password = $('#register_password').val();
 		var confirm_password = $('#register_confirm_password').val();
 		var gender = $("input[name='gender']:checked").val();
+		var location = $('#register_location').val();
 
 		// Checks
 		var name_check = /^[A-Za-z0-9_. ]{3,20}$/;
@@ -50,6 +51,7 @@ Template.register_form.events = {
 				password: password,
 				profile: {
 					gender: gender,
+					location: location,
 					avatar: {
 						url: '/images/avatar/default.png',
 						height: 200,

@@ -5,14 +5,14 @@
 		<div class="form-group">
 			<label for="register_name" class="col-sm-2 control-label">Name</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="register_name" placeholder="This is the name that will be shown in public.">
+				<input type="text" class="form-control" id="register_name" maxlength="20" placeholder="This is the name that will be shown in public.">
 	    	</div>
 	    </div>
 
 		<div class="form-group">
 			<label for="register_email" class="col-sm-2 control-label">Email</label>
 			<div class="col-sm-10">
-				<input type="email" class="form-control" id="register_email" placeholder="Email">
+				<input type="email" class="form-control" id="register_email" maxlength="66" placeholder="Email">
 	    	</div>
 	    </div>
 
@@ -35,21 +35,28 @@
 			<div class="col-sm-10">
 				<div class="radio">
 					<label>
-						<input name="gender" type="radio" value="male"> Male
+						<input name="gender" type="radio" value="Male"> Male
 					</label>
 				</div>
 				<div class="radio">
 					<label>
-						<input name="gender" type="radio" value="female"> Female
+						<input name="gender" type="radio" value="Female"> Female
 					</label>
 				</div>
 				<div class="radio">
 					<label>
-						<input name="gender" type="radio" value="unspecified"> (unspecified)
+						<input name="gender" type="radio" value="Unspecified"> (unspecified)
 					</label>
 				</div>
 			</div>
-		</div>		
+		</div>	
+		<hr>
+		<div class="form-group">
+			<label for="register_location" class="col-sm-2 control-label">Location</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="register_location" placeholder="Location" maxlength="60">
+			</div>
+		</div>	
 
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Verification</label>

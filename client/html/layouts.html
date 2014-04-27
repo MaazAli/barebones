@@ -23,16 +23,16 @@
 
 	{{> yield region='header'}}
 	
-	<div class="container" style="padding-top: 100px">
+	<div class="container" style="padding-top: 100px; max-width: 990px">
 		{{> yield region='profile_cover'}}
 
 		<div class="row">		
 
-			<div class="col-sm-8">
+			<div class="col-sm-10">
 				{{> yield}}
 			</div>
 
-			<div class="col-sm-4">
+			<div class="col-sm-2">
 				{{> yield region='sidebar'}}
 			</div>
 

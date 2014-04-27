@@ -6,6 +6,10 @@ Accounts.onCreateUser(function(options, user) {
 	user.comment_count = 0;
 	user.influence_points = 0;
 	user.specific_stats = {}
+	user.follower_count = 0;
+	user.followers = [];
+	user.following_count = 0;
+	user.following = [];
 
 	// Generate the username slug
 	var username = user.username;
