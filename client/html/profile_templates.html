@@ -77,8 +77,17 @@
 				</div>
 
 				<div style="float:right">
-					<span><a>Like</a></span>
-					<span><a>Comment</a></span>
+					<span>{{this.like_count}}</span>
+					{{#if user_owns_post this.username}}
+							
+					{{else}}
+						{{#if is_profile_post_liked this._id}}
+								<span><a href="javascript:void(0)" class="profile_post_like_handler" id="profile_post_like_{{this._id}}">Unlike</a></span>
+						{{else}}
+								<span><a href="javascript:void(0)" class="profile_post_like_handler" id="profile_post_like_{{this._id}}">Like</a></span>
+						{{/if}}
+					{{/if}}
+					<span><a id="profile_post_comment">Comment</a></span>
 				</div>
 			</div>
 		</div>

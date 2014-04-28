@@ -20,7 +20,6 @@ Template.profile_sidebar.user_owns_profile = function(username) {
 
 Template.profile_sidebar.user_following = function(username) {
 	var current_user = Meteor.user();
-	console.log($.inArray(username, current_user.following));
 	if ($.inArray(username, current_user.following) > -1) {
 		return true;
 	} else {
@@ -78,6 +77,49 @@ Template.profile_post_submission_form.events = {
 
 }
 
+Template.profile_post_item.events = {
+
+	'click .profile_post_like_handler' : function(event) {
+		var profile_post_id = this._id;
+		var current_user_id = Meteor.userId();
+		//console.log($(event.target).attr('id'));
+		Meteor.call('profile_post_like', profile_post_id, current_user_id, function(error, results) {
+
+			if (error) {
+				console.log('profile_post_like error ' + error);
+			} else {
+				var current_content = $('#profile_post_like_' + profile_post_id).html();
+				console.log(current_content)
+				if (current_content == "Like") {
+					$('#profile_post_like_' + profile_post_id).html('Unlike');
+				} else if (current_content == "Unlike") {
+					$('#profile_post_like_' + profile_post_id).html('Like');
+				}
+			}
+
+		});
+	}
+
+
+}
+
+Template.profile_post_item.is_profile_post_liked = function(id) {
+	var profile_post = Profile_posts.findOne({_id: id});
+	var current_user_id = Meteor.userId();
+	if ($.inArray(current_user_id, profile_post.users_liked) > -1) {
+		return true;	
+	} else {
+		return false;
+	}
+}
+
+Template.profile_post_item.user_owns_post = function(username) {
+	if (username == Meteor.user().username) {
+		return true;
+	} else {
+		return false;
+	}
+};
 
 Template.profile_main.profile_post = function() {
 	console.log(this._id);
