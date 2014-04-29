@@ -17,5 +17,4 @@ Proposed structure for influence points
 
 	influence_points : {
 				tag_name: {influence_points: 23, level: 1},
-				tag_name_2: {influence_points: 54, level: 4}
-}
+				tag_name_2: {influence_points: 54, level: 4}}

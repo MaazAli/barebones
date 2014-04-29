@@ -1,6 +1,8 @@
 Meteor.methods({
 	create_question: function(question_title, slug, question_content, user_id, username, tags_array, users_voted) {
 
+			var question_points = 2;
+
 			var newID = Questions.insert({
 					title: question_title,
 					slug: slug,
@@ -36,6 +38,15 @@ Meteor.methods({
 				console.log(result);
 				console.log(error);
 			});
+
+			for (var i = 0; i < tags_array.length; i++) {
+				// Update influence points
+				Meteor.call('increment_influence_points_user_per_tag', question_points, tags_array[i], function(error, result) {
+					console.log(result);
+					console.log(error);
+				});
+
+			}
 
 			return newID;	
 	},

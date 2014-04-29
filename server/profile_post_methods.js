@@ -28,7 +28,5 @@ Meteor.methods({
 			return "liked";
 		}
 
-		return "nothing_happened";
-
 	}
 });

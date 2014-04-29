@@ -1,7 +1,10 @@
 Meteor.methods({
 	create_answer: function(question_id, answer_content, user_id, username, users_voted) {
 
-			var answer_points = 2;
+			var answer_points = 5;
+			var current_question = Questions.findOne({_id:question_id});
+			var all_tags = current_question.tags;
+			console.log(all_tags);
 
 			var newID = Answers.insert({
 				question_id: question_id,
@@ -22,11 +25,13 @@ Meteor.methods({
 				console.log(error);
 			});
 
-			// Update influence points, 2 per answer
-			Meteor.call('increment_influence_points_user', answer_points, function(error, result) {
-				console.log(result);
-				console.log(error);
-			});
+			for (var i = 0; i < all_tags.length; i++) {
+				// Update influence points
+				Meteor.call('increment_influence_points_user_per_tag', answer_points, all_tags[i], function(error, result) {
+					console.log(result);
+					console.log(error);
+				});
+			}
 
 			// Update the question with the answer count 
 			Meteor.call('increment_answer_count_question', question_id, function(error, result) {

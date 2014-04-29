@@ -4,7 +4,8 @@ Accounts.onCreateUser(function(options, user) {
 	user.question_count = 0;
 	user.answer_count = 0;
 	user.comment_count = 0;
-	user.influence_points = 0;
+	user.influence = {};
+	user.level_count = 0;
 	user.specific_stats = {}
 	user.follower_count = 0;
 	user.followers = [];
