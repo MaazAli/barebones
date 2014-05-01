@@ -78,21 +78,39 @@
 
 				<div style="float:right">
 					<span>{{this.like_count}}</span>
-					{{#if user_owns_post this.username}}
-							
-					{{else}}
-						{{#if is_profile_post_liked this._id}}
-								<span><a href="javascript:void(0)" class="profile_post_like_handler" id="profile_post_like_{{this._id}}">Unlike</a></span>
+					{{#if currentUser}}
+						{{#if user_owns_post this.username}}
+								
 						{{else}}
-								<span><a href="javascript:void(0)" class="profile_post_like_handler" id="profile_post_like_{{this._id}}">Like</a></span>
+							{{#if is_profile_post_liked this._id}}
+									<span><a href="javascript:void(0)" class="profile_post_like_handler" id="profile_post_like_{{this._id}}">Unlike</a></span>
+							{{else}}
+									<span><a href="javascript:void(0)" class="profile_post_like_handler" id="profile_post_like_{{this._id}}">Like</a></span>
+							{{/if}}
 						{{/if}}
+						<span><a href="javascript:void(0)" class="profile_post_comment_handler" id="profile_post_comment_{{this._id}}">Comment</a></span>
 					{{/if}}
-					<span><a id="profile_post_comment">Comment</a></span>
 				</div>
 			</div>
 		</div>
 		<div class="clearfix"></div>
+
+		<div id="comment-list_{{this._id}}" class="col-sm-12 comment-list">
+			{{#each comment}}
+				{{> comment_display}}
+			{{/each}}
+			<div id="comment-submission_{{this._id}}" class="comment-submission">
+				{{#if currentUser}}
+					{{> comment_submission_form}}
+				{{/if}}
+			</div>
+			<input type="hidden" class="content-type-indicator" value="profile-post">		
+		</div>
+		<div class="clearfix"></div>
+
 	</div>
+
+
 
 
 </template>

@@ -2,7 +2,7 @@ Template.comment_submission_form.events = {
 	'keypress .comment-submission-input' : function(event) { 
 
 		//console.log('test');
-		var min_comment_char = 20;
+		var min_comment_char = 10;
 		var max_comment_char = 500;
 		var content_element = $(event.target);
 		var content = content_element.val().trim();
@@ -31,9 +31,9 @@ Template.comment_submission_form.events = {
 			var user_id = user_object._id;
 			var users_voted = [];
 
-			if (content.length < 20 ) {
+			if (content.length < min_comment_char ) {
 				//alert('You need at least ' + min_comment_char + ' characters.');
-			} else if (content.length > 500) {
+			} else if (content.length > max_comment_char) {
 				//alert('Keep comments short, make it less than ' + max_comment_char + ' characters.');
 			} else if(content_id) {
 

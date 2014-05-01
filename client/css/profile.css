@@ -70,6 +70,7 @@
 
 .profile-post-wrapper {
 	margin: 10px 0;
+	position: relative;
 }
 
 .profile-post-side {
@@ -102,4 +103,34 @@
 	display: inline;
 	font-size: 15px;
 	padding-right: 10px;
+}
+
+.profile-post-wrapper .comment-list {
+	margin-top: 10px;
+	padding-bottom: 10px;
+	box-shadow: none;
+	border: none;
+	margin-left: 80px;
+	max-width: 400px;
+	padding: 10px;
+	background-color: #F1F1F1;
+}
+
+.comment-submission {
+	transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+}
+
+.closed.comment-submission {
+	opacity: 0;
+	margin-top: -150px;
+	z-index: -5;
+}
+
+.open.comment-submission {
+	margin-top: 10px;
+	opacity: 1;
+	z-index: 1;
 }

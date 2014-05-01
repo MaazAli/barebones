@@ -98,6 +98,21 @@ Template.profile_post_item.events = {
 			}
 
 		});
+	},
+
+	'click .profile_post_comment_handler' : function(event) {
+		var profile_post_id = this._id;
+		var element = "#comment-submission_" + profile_post_id;
+
+		$(element + ' textarea').focus();
+
+		// if ($(element).hasClass('closed')) {
+		// 	$(element).removeClass('closed');
+		// 	$(element).addClass('open');
+		// }  else {
+		// 	$(element).removeClass('open');
+		// 	$(element).addClass('closed');			
+		// }
 	}
 
 
@@ -111,7 +126,7 @@ Template.profile_post_item.is_profile_post_liked = function(id) {
 	} else {
 		return false;
 	}
-}
+};
 
 Template.profile_post_item.user_owns_post = function(username) {
 	if (username == Meteor.user().username) {
@@ -120,6 +135,10 @@ Template.profile_post_item.user_owns_post = function(username) {
 		return false;
 	}
 };
+
+Template.profile_post_item.comment = function() {
+	return Comments.find({content_id: this._id});
+}
 
 Template.profile_main.profile_post = function() {
 	console.log(this._id);
