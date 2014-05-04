@@ -201,8 +201,8 @@
 				<i data-content-id="{{_id}}" data-increment="-1" class="fa fa-thumbs-down post-thumbs"></i>
 			</span>
 
-			<span class="post-add-comment">Edit</span>
-			<span class="post-add-comment">Add Comment</span>
+			<span id="post_edit_{{_id}}" class="post-edit">Edit</span>
+			<span id="post_add_comment_{{_id}}" class="post-add-comment">Add Comment</span>
 		{{/if}}
 
 	</div>
@@ -214,7 +214,7 @@
 			<form role="form">
 				<div class="form-group question-title-wrapper">
 					<label class="title_preview">Ask Question</label>
-					<input id="question_title_input" class="form-control" type="text" placeholder="Question title...">
+					<input maxlength="75" id="question_title_input" class="form-control" type="text" placeholder="Question title...">
 				</div>
 
 				<div class="form-group">
@@ -224,7 +224,7 @@
 						</div>
 
 						<div class="col-md-6">
-							<div id="preview_output">Question preview will appear here.</div>
+							<div style="word-wrap: break-word" id="preview_output">Question preview will appear here.</div>
 						</div>
 
 					</div>
@@ -236,6 +236,9 @@
 				</div>
 
 				<button id="post_question_button" type="submit" class="btn btn-success">Post my Question!</button>
+				<span id="char_indicator_title" class="char-indicator">Title: 5 to go</span>
+				<span id="char_indicator_content" class="char-indicator">Content: 100 to go</span>
+				<span id="indicator_tag" class="char-indicator">1 tag to go</span>
 			</form>
 
 </template>

@@ -5,7 +5,7 @@
 	
 
 	<div class="comment-main">
-		<textarea class="comment-submission-input form-control" rows="1" placeholder="Write a comment..."></textarea>
+		<textarea id="comment_input_{{_id}}" class="comment-submission-input form-control" rows="1" placeholder="Write a comment..."></textarea>
 
 		<input class="comment_content_id" type="hidden" value="{{this._id}}" />
 
@@ -23,10 +23,12 @@
 
 		<div class="comment-main">
 			<div class="comment-content">
-				<div class="comment-username">
-					<a href="/members/{{user_slugged this.username}}">{{this.username}}</a>
+				<div style="display: inline; word-wrap: break-word;">
+					<div class="comment-username">
+						<a href="/members/{{user_slugged this.username}}">{{this.username}}</a>
+					</div>
+					{{this.content}}
 				</div>
-				{{this.content}}
 			</div>
 
 			<div class="comment-control">

@@ -267,6 +267,9 @@ Template.post_action_bar.events = {
 
 
 
+	},
+	'click .post-add-comment' : function(event) {
+		$('#comment_input_' + this._id).focus();
 	}
 
 }

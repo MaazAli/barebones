@@ -19,6 +19,24 @@ Template.create_question.rendered = function() {
 				$('#tag_input_tag').focus();
 				// Add user notification that tag does not exist.
 			}
+			var min_title_length = 5;
+			var max_title_length = 75;
+			var min_question_content_length = 100;
+			var question_title = $('#question_title_input').val();
+			var question_content = $('#question_content').val();
+			var tags = $('#tag_input').val();
+
+			disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);
+		},
+		'onRemoveTag' : function(tag_name) {
+			var min_title_length = 5;
+			var max_title_length = 75;
+			var min_question_content_length = 100;
+			var question_title = $('#question_title_input').val();
+			var question_content = $('#question_content').val();
+			var tags = $('#tag_input').val();
+
+			disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);			
 		}
 	});
 
@@ -26,9 +44,36 @@ Template.create_question.rendered = function() {
 
 };
 
-var disable_question_submit = function(question_title, question_content, min_title, max_title, min_content) {
+var disable_question_submit = function(question_title, question_content, min_title, max_title, min_content, tags) {
 
-		if (question_title.length < min_title || question_title.length > max_title || question_content.length < min_content ) {
+
+		// For Question Title
+		if (question_title.length < min_title) {
+			$('#char_indicator_title').html("Title: " + (min_title - question_title.length) + " to go");
+		} else if ((max_title - question_title.length) <= 10 && (max_title - question_title.length) > 0) {
+			$('#char_indicator_title').html("Title: " + (max_title - question_title.length) + " characters left");
+		} else if ((max_title - question_title.length) < 0) {
+			$('#char_indicator_title').html("Title: Remove " + (question_title.length - max_title) + " characters");
+		} else {
+			$('#char_indicator_title').html("");
+		}
+
+		// For question_content
+		if (question_content.length < min_content) {
+			$('#char_indicator_content').html("Content: " + (min_content - question_content.length) + " to go");
+		} else {
+			$('#char_indicator_content').html('');
+		}
+
+		// For tag 
+
+		if (tags != "") {
+			$('#indicator_tag').html('');
+		}
+
+		// Check
+
+		if (question_title.length < min_title || question_title.length > max_title || question_content.length < min_content || tags == '') {
 			$('#post_question_button').prop('disabled', true);
 		} else {
 			$('#post_question_button').prop('disabled', false);
@@ -43,7 +88,7 @@ Template.create_question.events = {
 		question_title = $('#question_title_input').val();
 
 		if (question_title) {
-			$('.title_preview').html('Ask Question: <span>' + question_title + '</span>');
+			$('.title_preview').html('Ask Question: <span style="word-wrap: break-word">' + question_title + '</span>');
 		} else {
 			$('.title_preview').html('Ask Question');
 		}
@@ -53,8 +98,9 @@ Template.create_question.events = {
 		var min_question_content_length = 100;
 		var question_title = $('#question_title_input').val();
 		var question_content = $('#question_content').val();
+		var tags = $('#tag_input').val();
 
-		disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length);
+		disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);
 
 	},
 
@@ -69,8 +115,9 @@ Template.create_question.events = {
 		var min_question_content_length = 100;
 		var question_title = $('#question_title_input').val();
 		var question_content = $('#question_content').val();
+		var tags = $('#tag_input').val();
 
-		disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length);
+		disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);
 
 	},
 

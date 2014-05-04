@@ -136,6 +136,7 @@
 	.profile-post-content {
 		min-height: 35px;
 		padding-top: 5px;
+		word-wrap: break-word;
 	}
 
 	.profile-post-sub {
