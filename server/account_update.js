@@ -57,6 +57,9 @@ Meteor.methods({
 		cover_object.height = height;
 		cover_object.width = width;
 		Meteor.users.update({_id: user_id}, {$set: {"profile.profile_cover": cover_object}});
+	},
+	update_status_message: function(user_id, user_status_message) {
+		Meteor.users.update({_id: user_id}, {$set: {"profile.status_message": user_status_message}});
 	}
 });
 

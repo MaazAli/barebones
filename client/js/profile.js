@@ -69,6 +69,17 @@ Template.profile_post_submission_form.events = {
 				}				
 
 			});
+
+			if (profile_user_id == user_id) {
+				Meteor.call('update_status_message', user_id, profile_post, function(error, results) {
+					if (error) {
+						console.log('update_status_message ' + error);
+					} else {
+						console.log('Your status has been updated');
+					}				
+
+				});				
+			}
 		}
 
 

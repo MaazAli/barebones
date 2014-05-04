@@ -1,6 +1,6 @@
 Template.tag_display.questions = function(tag_name) {
 
-	return Questions.find({tags: tag_name});
+	return Questions.find({tags: tag_name}, {sort: {created_timestamp: -1}});
 
 }
 

@@ -52,6 +52,7 @@ Template.register_form.events = {
 				profile: {
 					gender: gender,
 					location: location,
+					status_message: "",
 					avatar: {
 						url: '/images/avatar/default.png',
 						height: 200,

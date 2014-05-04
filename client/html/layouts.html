@@ -18,6 +18,23 @@
 
 </template>
 
+<template name="page_layout_no_sidebar">
+
+	{{> yield region='header'}}
+
+	<div class="container" style="padding-top: 100px">
+		<div class="row">
+			<div class="col-sm-12">
+				{{> yield}}
+			</div>
+		</div>
+	</div>
+
+	{{> yield region='footer'}}
+
+
+</template>
+
 
 <template name="profile_layout">
 

@@ -76,6 +76,7 @@ Router.map( function() {
 	this.route('ask_question', {
 		path: '/questions/ask',
 		template: 'create_question',
+		layoutTemplate: 'page_layout_no_sidebar',
 		yieldTemplates: {
 			'header': {to: 'header'},
 			'footer': {to: 'footer'}

@@ -37,8 +37,10 @@ Template.answer_submission_form.events = {
 
 		if (answer_content.length < min_answer_content) {
 			$('#post_answer_button').prop('disabled', true);
+			$('.char-indicator').html(min_answer_content - answer_content.length + " to go")
 		} else {
 			$('#post_answer_button').prop('disabled', false);
+			$('.char-indicator').html('');
 		}
 	}
 }
