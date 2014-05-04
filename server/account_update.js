@@ -29,6 +29,34 @@ Meteor.methods({
 		new_object["influence"] = user.influence;
 
 		Meteor.users.update({_id: this.userId}, {$set: new_object});
-	}	
+	},
+	profile_follow: function(follower, followee) {
+		Meteor.users.update({_id: followee}, {$inc: {follower_count: 1}});
+		Meteor.users.update({_id: follower}, {$inc: {following_count: 1}});
+
+		Meteor.users.update({_id: followee}, {$push: {followers: follower}});
+		Meteor.users.update({_id: follower}, {$push: {following: followee}});
+	},
+	profile_unfollow: function(follower, followee) {
+		Meteor.users.update({_id: followee}, {$inc: {follower_count: -1}});
+		Meteor.users.update({_id: follower}, {$inc: {following_count: -1}});
+
+		Meteor.users.update({_id: followee}, {$pull: {followers: follower}});
+		Meteor.users.update({_id: follower}, {$pull: {following: followee}});		
+	},
+	user_avatar_changer: function(user_id, img_url, height, width) {
+		var avatar_object = {};
+		avatar_object.url = img_url;
+		avatar_object.height = height;
+		avatar_object.width = width;
+		Meteor.users.update({_id: user_id}, {$set: {"profile.avatar": avatar_object}});
+	},
+	profile_cover_changer: function(user_id, img_url, height, width) {
+		var cover_object = {};
+		cover_object.url = img_url;
+		cover_object.height = height;
+		cover_object.width = width;
+		Meteor.users.update({_id: user_id}, {$set: {"profile.profile_cover": cover_object}});
+	}
 });
 

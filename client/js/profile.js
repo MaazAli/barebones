@@ -10,13 +10,13 @@ Template.profile_post_submission_form.profile_post_check = function(username) {
 	}
 };
 
-Template.profile_sidebar.user_owns_profile = function(username) {
-	if (username == Meteor.user().username) {
-		return true;
-	} else {
-		return false;
-	}
-};
+// Template.profile_sidebar.user_owns_profile = function(username) {
+// 	if (username == Meteor.user().username) {
+// 		return true;
+// 	} else {
+// 		return false;
+// 	}
+// };
 
 Template.profile_sidebar.user_following = function(username) {
 	var current_user = Meteor.user();
@@ -174,5 +174,83 @@ Template.profile_sidebar.events = {
 			}
 
 		});
+	}
+}
+
+
+Template.profile_cover.events = {
+	'blur #avatar_changer_url' : function(event) {
+		var img_url = $('#avatar_changer_url').val();
+		if (img_url != '') {
+			$('#avatar_changer_preview').attr('src', img_url);
+		}
+	},
+
+	'click #avatar_changer_save' : function(event) {
+
+
+		var img = new Image();
+		img.onload = function() {
+			// console.log("Url: " + this.src + "\n Height: " + this.height + "\n Width: " + this.width);
+			if (this.src != '') {
+				Meteor.call('user_avatar_changer', Meteor.userId(), this.src, this.height, this.width, function(error, results) {
+
+					if (error) {
+						console.log('user_avatar_changer error ' + error);
+					} else {
+						console.log('Avatar Changed Successfully');
+						$('#avatar_changer').modal('toggle');
+					}
+
+				});
+			}
+		}
+		img.src = $('#avatar_changer_url').val();
+	},
+
+	'click #profile-cover-changer-handler' : function(event) {
+		var wrapper = $('.profile-cover-changer-wrapper');
+
+		if (wrapper.hasClass('close')) {
+			wrapper.removeClass('close');
+			wrapper.addClass('open');
+			$('#profile-cover-changer-handler').css('border-top-right-radius', '0px');
+			$('#profile-cover-changer-handler').css('border-top-left-radius', '0px');
+
+		} else {
+			wrapper.removeClass('open');
+			wrapper.addClass('close');		
+			$('#profile-cover-changer-handler').css('border-top-right-radius', '3px');
+			$('#profile-cover-changer-handler').css('border-top-left-radius', '3px');	
+		}
+	},
+
+	'blur #profile_cover_changer_url' : function(event) {
+		var img_url = $('#profile_cover_changer_url').val();
+
+		if (img_url != '') {
+			$('.profile-cover-wrapper').css('background', 'url("' + img_url + '")');
+		}
+	},
+
+	'click #profile_cover_save' : function(event) {
+		var wrapper = $('.profile-cover-changer-wrapper');
+		var img = new Image();
+		img.onload = function() {
+			// console.log("Url: " + this.src + "\n Height: " + this.height + "\n Width: " + this.width);
+			if (this.src != '') {
+				Meteor.call('profile_cover_changer', Meteor.userId(), this.src, this.height, this.width, function(error, results) {
+
+					if (error) {
+						console.log('profile_cover_changer error ' + error);
+					} else {
+						console.log('Profile Cover Changed Successfully');
+						wrapper.removeClass('open');
+						wrapper.addClass('close');
+					}	
+				});
+			}
+		}
+		img.src = $('#profile_cover_changer_url').val();		
 	}
 }

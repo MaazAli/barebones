@@ -1,10 +1,48 @@
 <template name="profile_cover">
 
-	<div class="profile-cover-wrapper" style="background: url('http://aaronpogue.com/wp-content/uploads/2013/02/site_header.jpg');">
+<div class="modal fade" id="avatar_changer" tabindex="-1" role="dialog" aria-labelledby="AvatarChanger" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Change your Avatar</h4>
+			</div>
+			<div class="modal-body">
 
+				<img id="avatar_changer_preview" style="float: left" class="profile-picture-lg" src="{{profile.avatar.url}}" />
 
+				<div  style="margin-left: 100px; padding-left: 20px; padding-top: 20px;" class="form-group">
+					<label for="avatar_changer_url">Avatar Url</label>
+					<input type="text" class="form-control" id="avatar_changer_url" placeholder="Recommended size of 100x100 or any square image">
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button id="avatar_changer_save" type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<div class="profile-cover-wrapper" style="background: url('{{profile.profile_cover.url}}');">
+		{{#if user_owns_profile username}}
+			<a id="profile-cover-changer-handler" class="profile-cover-changer-handler" href="javascript:void(0)"><i class="fa fa-picture-o"></i> Change your Cover</a>
+			<div class="profile-cover-changer-wrapper close">
+				<form class="form-inline" role="form">
+					<div  class="form-group">
+						<input type="text" class="form-control" id="profile_cover_changer_url" placeholder="960x250 is recommended">
+					</div>	
+					<button id="profile_cover_save" type="button" class="btn btn-primary">Save</button>
+				</form>		
+			</div>
+		{{/if}}
 		<div class="member-glance">
-			<img class="profile-picture" src="{{profile.avatar.url}}" />
+			{{#if user_owns_profile username}}
+				<a href="javascript:void(0)" data-toggle="modal" data-target="#avatar_changer"><img class="profile-picture" src="{{profile.avatar.url}}" /></a>
+			{{else}}
+				<img class="profile-picture" src="{{profile.avatar.url}}" />
+			{{/if}}
 			<div class="profile-username">{{username}}</div>
 			<div class="profile-sub-info">{{profile.gender}}, from {{profile.location}}</div>
 			<div class="profile-follower-count">{{follower_count}} followers</div>
@@ -20,7 +58,9 @@
 <template name="profile_main">
 
 	<div class="profile-main">
-		{{> profile_post_submission_form}}
+		{{#if currentUser}}
+			{{> profile_post_submission_form}}
+		{{/if}}
 
 		{{#each profile_post}}
 			{{> profile_post_item}}

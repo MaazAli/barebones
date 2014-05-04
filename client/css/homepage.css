@@ -1,3 +1,17 @@
+/* Question summary (Item Display) */
+
+
+	.item-title {
+		font-size: 16px;
+		margin-right: 140px;
+	}
+
+
+	.item-wrapper .item-main .tags-list-inline span {
+		font-size: 10px;
+		padding: 2px 5px;
+	}
+
 .question-summary-side {
 	float: left;
 	position:relative;
@@ -37,6 +51,15 @@
 	padding-top: 5px;
 	color: rgb(204, 204, 204);
 }
+	.question-summary-sub:before,
+	.question-summary-sub:after {
+		content: " ";
+		display: table;		
+	}
+
+	.question-summary-sub:after {
+		clear: both;
+	}
 
 .question-summary-sub a {
 	color: rgb(145, 144, 144);

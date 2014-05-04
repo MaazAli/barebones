@@ -250,16 +250,3 @@
 	    height: 0px;
 	    left: -10px;	
 	}
-
-/* Question summary (Item Display) */
-
-
-	.item-title {
-		font-size: 16px;
-	}
-
-
-	.item-wrapper .item-main .tags-list-inline span {
-		font-size: 10px;
-		padding: 2px 5px;
-	}

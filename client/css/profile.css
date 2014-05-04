@@ -6,6 +6,54 @@
 	margin-bottom: 20px;
 }
 
+	.profile-cover-wrapper:hover > .profile-cover-changer-handler {
+		opacity: 1;
+	}
+
+	.profile-cover-changer-handler {
+		opacity: 0;
+		position: absolute;
+		z-index: 2;
+		bottom: 10px;
+		right: 10px;
+		padding: 5px 10px;
+		background-color: #fff;
+		color: #7C7C7C;
+		border-radius: 3px;
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+		transition: all 0.3s ease-in-out;
+		-moz-transition: all 0.3s ease-in-out;
+		-webkit-transition: all 0.3s ease-in-out;
+		-o-transition: all 0.3s ease-in-out;
+	}
+
+		.profile-cover-changer-handler:hover {
+			text-decoration: none;
+			color: #fff;
+			background-color: #009CB1;
+		}
+
+	.profile-cover-changer-wrapper {
+		position: absolute;	
+		display: none;
+		z-index: 2;
+		bottom: 40px;
+		right: 10px;
+		padding: 10px;
+		background-color: #fff;
+		border-top-left-radius: 3px;
+		border-top-right-radius: 3px;
+		border-bottom-left-radius: 3px;
+	}
+
+	.open.profile-cover-changer-wrapper {
+		display:block;
+	}
+
+	.close.profile-cover-changer-wrapper {
+		display: none;
+	}
+
 .cover-shadow {
 	position: absolute;
 	z-index: 1;

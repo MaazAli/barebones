@@ -25,3 +25,11 @@ textarea {
 	box-shadow: 0 0 5px #B9B9B9;
 }
 
+.profile-picture-lg {
+	width: 100px;
+	height: 100px;
+	border-radius: 50px;
+	border: 3px solid #fff;
+	box-shadow: 0 0 5px #B9B9B9;
+}
+

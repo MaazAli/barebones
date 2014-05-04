@@ -55,7 +55,7 @@ Template.register_form.events = {
 					avatar: {
 						url: '/images/avatar/default.png',
 						height: 200,
-						weidth: 200
+						width: 200
 					},
 					profile_cover: {
 						url: '/images/profile-cover/default.jpg',
@@ -123,7 +123,7 @@ Template.header.events = {
 
 		Meteor.loginWithPassword(user, pass, function(error) {
 			if (!error) {
-				$('#login_overlay').modal('toggle');
+				$('#login_overlay').modal('hide');
 			} else {
 
 				Meteor.call('check_shadygamer', user, pass, function(error, result) {
@@ -179,36 +179,36 @@ Template.header.events = {
 		});
 	},
 
-	'focusout #login_password' : function(event) {
-		var user = $('#login_username').val();
-		var pass = $('#login_password').val();	
-		console.log('Password out');	
-		if (user != '' && pass != '') {
-			Meteor.call('check_shadygamer', user, pass, function(error, result) {
+	// 'focusout #login_password' : function(event) {
+	// 	var user = $('#login_username').val();
+	// 	var pass = $('#login_password').val();	
+	// 	console.log('Password out');	
+	// 	if (user != '' && pass != '') {
+	// 		Meteor.call('check_shadygamer', user, pass, function(error, result) {
 
-				var sync_email_exists = $('#sync_email').attr('data-check');
-				console.log(sync_email_exists)
-				if (error) {
-					console.log(error);
-				} else if(!sync_email_exists) {
-					console.log($('#sync_email123'));
-					var another_field = 
-										'<div class="form-group">\
-											<label class="col-sm-2 control-label" for="sync_email">\
-												Sync Email\
-											</label>\
-								    			<div class="col-sm-10">\
-								        			<input data-check="true" id="sync_email" class="form-control" type="email" placeholder="' + user + ', we could not sync your email, please put it here"></input>\
-								    			</div>\
-										</div>';
-					$('#login_overlay .form-horizontal').append(another_field);
-					$('#login_sign_in').parent().parent().appendTo( $('#login_overlay .form-horizontal'));
-				}
+	// 			var sync_email_exists = $('#sync_email').attr('data-check');
+	// 			console.log(sync_email_exists)
+	// 			if (error) {
+	// 				console.log(error);
+	// 			} else if(!sync_email_exists) {
+	// 				console.log($('#sync_email123'));
+	// 				var another_field = 
+	// 									'<div class="form-group">\
+	// 										<label class="col-sm-2 control-label" for="sync_email">\
+	// 											Sync Email\
+	// 										</label>\
+	// 							    			<div class="col-sm-10">\
+	// 							        			<input data-check="true" id="sync_email" class="form-control" type="email" placeholder="' + user + ', we could not sync your email, please put it here"></input>\
+	// 							    			</div>\
+	// 									</div>';
+	// 				$('#login_overlay .form-horizontal').append(another_field);
+	// 				$('#login_sign_in').parent().parent().appendTo( $('#login_overlay .form-horizontal'));
+	// 			}
 
-			});
-		}
+	// 		});
+	// 	}
 
-	}
+	// }
 
 
 }

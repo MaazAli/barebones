@@ -11,12 +11,12 @@ Accounts.onCreateUser(function(options, user) {
 	user.followers = [];
 	user.following_count = 0;
 	user.following = [];
+	user.primary_user_group = 1; // Assumed to be the registered user group id
+	user.secondary_user_group = [];
 
 	// Generate the username slug
 	var username = user.username;
-	var username_slug = username.toLowerCase().replace(' ', '-');
-	username_slug = username_slug.replace('.', '-');
-	username_slug = username_slug.replace('_', '-');	
+	var username_slug = slug_username(username);
 
 	user.username_slug = username_slug;
 

@@ -14,3 +14,11 @@ UI.registerHelper('user_slugged', function(username) {
 UI.registerHelper('votes_positive', function(votes) {
 	return votes>=0;
 });
+
+UI.registerHelper('user_owns_profile', function(username) {
+	if (username == Meteor.user().username) {
+		return true;
+	} else {
+		return false;
+	}
+});
