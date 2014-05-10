@@ -1,4 +1,5 @@
 Template.create_question.rendered = function() {
+	$('#tag_input').val('');
 	$('#tag_input').tagsInput({
 		'minChars' : 1,
 		'maxChars' : 25,
@@ -24,7 +25,7 @@ Template.create_question.rendered = function() {
 			var min_question_content_length = 100;
 			var question_title = $('#question_title_input').val();
 			var question_content = $('#question_content').val();
-			var tags = $('#tag_input').val();
+			var tags = $('#tag_input').val().trim();
 
 			disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);
 		},
@@ -34,7 +35,7 @@ Template.create_question.rendered = function() {
 			var min_question_content_length = 100;
 			var question_title = $('#question_title_input').val();
 			var question_content = $('#question_content').val();
-			var tags = $('#tag_input').val();
+			var tags = $('#tag_input').val().trim();
 
 			disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);			
 		}
@@ -67,7 +68,7 @@ var disable_question_submit = function(question_title, question_content, min_tit
 
 		// For tag 
 
-		if (tags != "") {
+		if (tags != "" && tags != undefined && tags != null) {
 			$('#indicator_tag').html('');
 		}
 
@@ -96,10 +97,11 @@ Template.create_question.events = {
 		var min_title_length = 5;
 		var max_title_length = 75;
 		var min_question_content_length = 100;
-		var question_title = $('#question_title_input').val();
-		var question_content = $('#question_content').val();
-		var tags = $('#tag_input').val();
+		var question_title = $('#question_title_input').val().trim();
+		var question_content = $('#question_content').val().trim();
+		var tags = $('#tag_input').val().trim();
 
+		console.log(tags);
 		disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);
 
 	},
@@ -107,15 +109,15 @@ Template.create_question.events = {
 
 	// For previewing the output
 	'keyup, keypress, blur #question_content' : function(event) {
-		var content = $('#question_content').val();
+		var content = $('#question_content').val().trim();
 		$('#preview_output').html(content);
 
 		var min_title_length = 5;
 		var max_title_length = 75;
 		var min_question_content_length = 100;
-		var question_title = $('#question_title_input').val();
-		var question_content = $('#question_content').val();
-		var tags = $('#tag_input').val();
+		var question_title = $('#question_title_input').val().trim();
+		var question_content = $('#question_content').val().trim();
+		var tags = $('#tag_input').val().trim();
 
 		disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);
 
@@ -130,13 +132,10 @@ Template.create_question.events = {
 
 		var min_question_content_length = 100;
 
-		var question_title = $('#question_title_input').val();
-		var slug = question_title.replace(/[^a-zA-Z0-9\s]/g,"");
-		slug = slug.toLowerCase();
-		slug = slug.replace(/\s/g,'-');
-		slug = slug.replace(/^-*|-*$|(-)-*/g, "$1");
-		var question_content = $('#question_content').val();
+		var question_title = $('#question_title_input').val().trim();
+		var question_content = $('#question_content').val().trim();
 		var tags_input = $('#tag_input').val();
+		var tags_array = tags_input.split(',');
 
 		console.log(tags_input);
 
@@ -146,7 +145,6 @@ Template.create_question.events = {
 
 		var users_voted = [];
 
-		console.log(tags_array);
 
 		if (question_title.length < min_title_length || question_title.length > max_title_length) {
 			alert('Your title\'s length must be between ' + min_title_length + ' and ' + max_title_length + ' characters.');
@@ -158,15 +156,13 @@ Template.create_question.events = {
 			alert('You need at least one approved tag.');
 		} else {
 
-			var tags_array = tags_input.split(',');
-
-			Meteor.call('create_question', question_title, slug, question_content, user_id, username, tags_array, users_voted, function(error, result) {
+			Meteor.call('create_question', question_title, question_content, user_id, username, tags_array, users_voted, function(error, result) {
 				console.log('create_question error ' + error);
 				console.log('create_question result ' + result);
 
 				if (error) {
 
-				} else {
+				} else if (result != null) {
 					console.log('Your question was submitted');
 					Router.go('question_display', {_id: result});
 				}

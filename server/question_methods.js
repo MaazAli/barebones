@@ -1,54 +1,93 @@
 Meteor.methods({
-	create_question: function(question_title, slug, question_content, user_id, username, tags_array, users_voted) {
+	create_question: function(question_title, question_content, user_id, username, tags_array, users_voted) {
 
-			var question_points = 2;
+			// Various checks
 
-			var newID = Questions.insert({
-					title: question_title,
-					slug: slug,
-					content: question_content,
-					user_id: user_id,
-					username: username,
-					tags: tags_array,
-					created_timestamp: Date.now(),
-					updated_timestamp: 0,
-					question_state: "Visible",
-					answer_count: 0,
-					view_count: 0,
-					question_open: true,
-					comment_count: 0,
-					vote_score: 0,
-					users_voted: users_voted
-			});
+			if (Meteor.userId() != user_id) {
+				new Meteor.Error('403', 'User ID does not match.');
+				return null;
+			}
 
-			// Update user question_count
-			Meteor.call('increment_question_count_user', function(error, result) {
-				console.log(result);
-				console.log(error);
-			});
+			if (Meteor.user().username != username) {
+				new Meteor.Error('403', 'User name does not match.');
+				return null;
+			}
 
-			// Update question_count for tags
-			Meteor.call('increment_questions_tagged_tags', tags_array, function(error, result) {
-				console.log(result);
-				console.log(error);
-			});
+			// Generic redundant checks that are necessary
+			var min_title_length = 5;
+			var max_title_length = 75;
 
-			// Update Tag's activity timestamps
-			Meteor.call('update_activity_timestamps_tags', tags_array, function(error, result) {
-				console.log(result);
-				console.log(error);
-			});
+			var min_question_content_length = 100;
 
-			for (var i = 0; i < tags_array.length; i++) {
-				// Update influence points
-				Meteor.call('increment_influence_points_user_per_tag', question_points, tags_array[i], function(error, result) {
+			question_title = question_title.trim();
+			question_content = question_content.trim();
+			var slug = question_title.replace(/[^a-zA-Z0-9\s]/g,"");
+			slug = slug.toLowerCase();
+			slug = slug.replace(/\s/g,'-');
+			slug = slug.replace(/^-*|-*$|(-)-*/g, "$1");			
+
+			if (question_title.length < min_title_length || question_title.length > max_title_length) {
+				console.log('Question title length issue');
+				return null;
+			} else if (question_content < min_question_content_length) {
+				console.log('Question content length issue');
+				return null;
+			} else if (user_id == null) {
+				consle.log('User ID is null');
+				return null;
+			} else if ( tags_array.length == 0 ) {
+				console.log('Tags Array\'s length is 0');
+				return null;
+			} else {
+				var question_points = 2;
+
+				var newID = Questions.insert({
+						title: question_title,
+						slug: slug,
+						content: question_content,
+						user_id: user_id,
+						username: username,
+						tags: tags_array,
+						created_timestamp: Date.now(),
+						updated_timestamp: 0,
+						question_state: "Visible",
+						answer_count: 0,
+						view_count: 0,
+						question_open: true,
+						comment_count: 0,
+						vote_score: 0,
+						users_voted: users_voted
+				});
+
+				// Update user question_count
+				Meteor.call('increment_question_count_user', function(error, result) {
 					console.log(result);
 					console.log(error);
 				});
 
-			}
+				// Update question_count for tags
+				Meteor.call('increment_questions_tagged_tags', tags_array, function(error, result) {
+					console.log(result);
+					console.log(error);
+				});
 
-			return newID;	
+				// Update Tag's activity timestamps
+				Meteor.call('update_activity_timestamps_tags', tags_array, function(error, result) {
+					console.log(result);
+					console.log(error);
+				});
+
+				for (var i = 0; i < tags_array.length; i++) {
+					// Update influence points
+					Meteor.call('increment_influence_points_user_per_tag', question_points, tags_array[i], function(error, result) {
+						console.log(result);
+						console.log(error);
+					});
+
+				}
+
+				return newID;
+			}	
 	},
 	increment_answer_count_question: function (question_id) {
 		Questions.update({_id: question_id}, {$inc : {answer_count: 1}});
@@ -61,6 +100,9 @@ Meteor.methods({
 		// increment_by could be a negative amount.
 		// Returns false on failure and true on success.
 
+		if (user_id != Meteor.userId()) {
+			return "not updated";
+		}
 
 		var question = Questions.findOne({_id: question_id});
 		var users_voted = question.users_voted;

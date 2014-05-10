@@ -1,6 +1,8 @@
 UI.registerHelper('get_user_profile_picture', function(id) {
 	user_object = Meteor.users.findOne({_id: id});
-	return user_object.profile.avatar.url;
+	if (user_object) {
+		return user_object.profile.avatar.url;
+	}
 });
 
 
@@ -16,6 +18,11 @@ UI.registerHelper('votes_positive', function(votes) {
 });
 
 UI.registerHelper('user_owns_profile', function(username) {
+
+	if(Meteor.user() == null) {
+		return false;
+	}
+
 	if (username == Meteor.user().username) {
 		return true;
 	} else {

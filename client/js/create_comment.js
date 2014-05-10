@@ -29,9 +29,10 @@ Template.comment_submission_form.events = {
 			var user_object = Meteor.user()
 			var username = user_object.username;
 			var user_id = user_object._id;
-			var users_voted = [];
 
-			if (content.length < min_comment_char ) {
+			if (user_object == null) {
+				console.log('Please sign in');
+			} else if (content.length < min_comment_char ) {
 				//alert('You need at least ' + min_comment_char + ' characters.');
 			} else if (content.length > max_comment_char) {
 				//alert('Keep comments short, make it less than ' + max_comment_char + ' characters.');
@@ -40,7 +41,7 @@ Template.comment_submission_form.events = {
 						// Reset the comment box
 						content_element.val('');
 
-				Meteor.call('create_comment', content_type, content_id, content, user_id, username, users_voted, function(error, results) {
+				Meteor.call('create_comment', content_type, content_id, content, user_id, username, function(error, results) {
 					//console.log('create_comment error' + error);
 					//console.log('create_comment result' + result);
 

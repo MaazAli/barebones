@@ -159,6 +159,7 @@
 <template name="profile_sidebar">
 
 	<div class="profile-sidebar">
+	{{#if currentUser}}
 		{{#if user_owns_profile ./username}}
 			
 		{{else}}
@@ -172,6 +173,9 @@
 			<button id="profile_private_message" type="submit" class="btn btn-default btn-sm btn-block">Message</button>
 			<div class="clearfix"></div>
 		{{/if}}
+	{{else}}
+		{{comment Things to display when the user is not logged in}}
+	{{/if}}
 
 	</div>
 </template>

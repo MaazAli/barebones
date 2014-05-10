@@ -148,13 +148,22 @@ Template.header.events = {
 
 								user_object = result.data;
 								console.log(user_object);
+								if (user_object.gender == "male") {
+									var new_gender = "Male";
+								} else if (user_object.gender == "female") {
+									var new_gender = "Female";
+								} else {
+									var new_gender = "Unspecified";
+								}
 
 								options = {
 									username: user_object.username,
 									email: user_object.email,
 									password: pass,
 									profile: {
-										gender: user_object.gender,
+										gender: new_gender,
+										location: '',
+										status_message: "",
 										avatar: {
 											url: '/images/avatar/default.png',
 											height: 200,

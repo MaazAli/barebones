@@ -20,7 +20,8 @@ Template.profile_post_submission_form.profile_post_check = function(username) {
 
 Template.profile_sidebar.user_following = function(username) {
 	var current_user = Meteor.user();
-	if ($.inArray(username, current_user.following) > -1) {
+	
+	if (current_user != null && $.inArray(username, current_user.following) > -1) {
 		return true;
 	} else {
 		return false;
@@ -38,7 +39,7 @@ Template.profile_post_submission_form.events = {
 
 
 	'keyup, keypress, blur #profile_post_submission_input' : function(event) {
-		var content = $('#profile_post_submission_input').val();
+		var content = $('#profile_post_submission_input').val().trim();
 		var max_profile_post_length = 140;
 		if (content.length >= 1) {
 			$('#profile_post_submit').prop('disabled', false);
@@ -51,7 +52,7 @@ Template.profile_post_submission_form.events = {
 
 	'click #profile_post_submit' : function(event) {
 		var max_profile_post_length = 140; 
-		var profile_post = $('#profile_post_submission_input').val();
+		var profile_post = $('#profile_post_submission_input').val().trim();
 		var user_object = Meteor.user();
 		var username = user_object.username;
 		var user_id = user_object._id;

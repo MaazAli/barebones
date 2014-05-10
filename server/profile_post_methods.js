@@ -1,7 +1,32 @@
 Meteor.methods({
 	create_profile_post: function(profile_username, profile_user_id, username, user_id, profile_post) {
+
+		var max_profile_post_length = 140;
+
+		if (Meteor.userId() != user_id) {
+			new Meteor.Error('403', 'User ID does not match.');
+			return null;
+		}
+
+		if (Meteor.user().username != username) {
+			new Meteor.Error('403', 'User name does not match.');
+			return null;
+		}
+
+		var user_profile = Meteor.users.findOne({_id: profile_user_id});
+
+		if (user_profile == null || user_profile == undefined || user_profile == {}) {
+			return null;
+		}
+
+		if (profile_post > max_profile_post_length) {
+			return null;
+		}
+
+		// If we got to this point, then all the conditions above were met.
+
 		var newID = Profile_posts.insert({
-			profile_username: profile_username,
+			profile_username: user_profile.username,
 			profile_user_id: profile_user_id,
 			username: username,
 			user_id: user_id,

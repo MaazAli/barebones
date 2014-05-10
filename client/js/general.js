@@ -12,6 +12,7 @@ Template.editor.created = function() {
     this.editor = false;
 };
 
+
 Template.editor.rendered = function() {
     if (!this.editor) {
         var converter = {

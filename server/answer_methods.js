@@ -1,45 +1,68 @@
 Meteor.methods({
-	create_answer: function(question_id, answer_content, user_id, username, users_voted) {
+	create_answer: function(question_id, answer_content, user_id, username) {
+
+			// Various checks
+
+			if (Meteor.userId() != user_id) {
+				new Meteor.Error('403', 'User ID does not match.');
+				return null;
+			}
+
+			if (Meteor.user().username != username) {
+				new Meteor.Error('403', 'User name does not match.');
+				return null;
+			}
+
+
+			// Redundant checks that are necessary to fool proof
+			var min_answer_content = 20;
+			answer_content = answer_content.trim();
+
 
 			var answer_points = 5;
 			var current_question = Questions.findOne({_id:question_id});
 			var all_tags = current_question.tags;
-			console.log(all_tags);
 
-			var newID = Answers.insert({
-				question_id: question_id,
-				content: answer_content,
-				user_id: user_id,
-				username: username,
-				created_timestamp: Date.now(),
-				updated_timestamp: 0,
-				answer_state: "Visible",
-				comment_count: 0,
-				vote_score: 0,
-				users_voted: users_voted
-			});
+			if (answer_content.length < min_answer_content) {
+				return null;
+			} else {	
 
-			// Update the user statistics
-			Meteor.call('increment_answer_count_user', function(error, result) {
-				console.log(result);
-				console.log(error);
-			});
+				var newID = Answers.insert({
+					question_id: question_id,
+					content: answer_content,
+					user_id: user_id,
+					username: username,
+					created_timestamp: Date.now(),
+					updated_timestamp: 0,
+					answer_state: "Visible",
+					comment_count: 0,
+					vote_score: 0,
+					users_voted: []
+				});
 
-			for (var i = 0; i < all_tags.length; i++) {
-				// Update influence points
-				Meteor.call('increment_influence_points_user_per_tag', answer_points, all_tags[i], function(error, result) {
+				// Update the user statistics
+				Meteor.call('increment_answer_count_user', function(error, result) {
 					console.log(result);
 					console.log(error);
 				});
+
+				for (var i = 0; i < all_tags.length; i++) {
+					// Update influence points
+					Meteor.call('increment_influence_points_user_per_tag', answer_points, all_tags[i], function(error, result) {
+						console.log(result);
+						console.log(error);
+					});
+				}
+
+				// Update the question with the answer count 
+				Meteor.call('increment_answer_count_question', question_id, function(error, result) {
+					console.log(result);
+					console.log(error);
+				});
+
+				return newID;
+
 			}
-
-			// Update the question with the answer count 
-			Meteor.call('increment_answer_count_question', question_id, function(error, result) {
-				console.log(result);
-				console.log(error);
-			});
-
-			return newID;
 	},
 	increment_comment_count_answer: function (id) {
 		Answers.update({_id: id}, {$inc: {comment_count: 1}});
