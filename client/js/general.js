@@ -7,10 +7,25 @@ Template.header.current_user = function() {
 	return Meteor.user();
 }
 
+/*
+Tags Input
+*/
+
+Template.query_tags_token_input.rendered = function() {
+    console.log($('#matched_tags').val());
+}
+
+
+/*
+
+Editor related
+
+*/
+
 Template.editor.created = function() {
     Session.set('description', "");
     this.editor = false;
-};
+}
 
 
 Template.editor.rendered = function() {

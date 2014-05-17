@@ -1,52 +1,68 @@
 Template.create_question.rendered = function() {
-	$('#tag_input').val('');
-	$('#tag_input').tagsInput({
-		'minChars' : 1,
-		'maxChars' : 25,
-		'onAddTag' : function(tag_name) {
-			var tag_slug = tag_name.toLowerCase().replace(' ', '-');
-			var find = Tags.findOne({tag_slug: tag_slug});
-			if (find) {
-				console.log('Tag exists');
-				if (find.tag_name != tag_name) {
-					$('#tag_input').removeTag(tag_name);
-					$('#tag_input').addTag(find.tag_name);
-					$('#tag_input_tag').focus();
-				}
 
-			} else {
-				console.log('Tag does not exist!');
-				$('#tag_input').removeTag(tag_name);
-				$('#tag_input_tag').focus();
-				// Add user notification that tag does not exist.
-			}
-			var min_title_length = 5;
-			var max_title_length = 75;
-			var min_question_content_length = 100;
-			var question_title = $('#question_title_input').val();
-			var question_content = $('#question_content').val();
-			var tags = $('#tag_input').val().trim();
+	$('#tag_input').tokenInput("/autocomplete/tags", {
+            	theme: "facebook",
+            	propertyToSearch: "tag_name",
+            	tokenLimit: 5,
+            	preventDuplicates: true,
+	            onAdd: function(item) {
+					var min_title_length = 5;
+					var max_title_length = 75;
+					var min_question_content_length = 100;
+					var question_title = $('#question_title_input').val();
+					var question_content = $('#question_content').val();
+					var tags = $('#tag_input').tokenInput("get");
+					disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);            		
+            	},
+            });
 
-			disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);
-		},
-		'onRemoveTag' : function(tag_name) {
-			var min_title_length = 5;
-			var max_title_length = 75;
-			var min_question_content_length = 100;
-			var question_title = $('#question_title_input').val();
-			var question_content = $('#question_content').val();
-			var tags = $('#tag_input').val().trim();
+	// $('#tag_input').val('');
+	// $('#tag_input').tagsInput({
+	// 	'minChars' : 1,
+	// 	'maxChars' : 25,
+	// 	'onAddTag' : function(tag_name) {
+	// 		var tag_slug = tag_name.toLowerCase().replace(' ', '-');
+	// 		var find = Tags.findOne({tag_slug: tag_slug});
+	// 		if (find) {
+	// 			console.log('Tag exists');
+	// 			if (find.tag_name != tag_name) {
+	// 				$('#tag_input').removeTag(tag_name);
+	// 				$('#tag_input').addTag(find.tag_name);
+	// 				$('#tag_input_tag').focus();
+	// 			}
 
-			disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);			
-		}
-	});
+	// 		} else {
+	// 			console.log('Tag does not exist!');
+	// 			$('#tag_input').removeTag(tag_name);
+	// 			$('#tag_input_tag').focus();
+	// 			// Add user notification that tag does not exist.
+	// 		}
+	// 		var min_title_length = 5;
+	// 		var max_title_length = 75;
+	// 		var min_question_content_length = 100;
+	// 		var question_title = $('#question_title_input').val();
+	// 		var question_content = $('#question_content').val();
+	// 		var tags = $('#tag_input').val().trim();
+
+	// 		disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);
+	// 	},
+	// 	'onRemoveTag' : function(tag_name) {
+	// 		var min_title_length = 5;
+	// 		var max_title_length = 75;
+	// 		var min_question_content_length = 100;
+	// 		var question_title = $('#question_title_input').val();
+	// 		var question_content = $('#question_content').val();
+	// 		var tags = $('#tag_input').val().trim();
+
+	// 		disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);			
+	// 	}
+	// });
 
 	$('#post_question_button').prop('disabled', true);
 
 };
 
 var disable_question_submit = function(question_title, question_content, min_title, max_title, min_content, tags) {
-
 
 		// For Question Title
 		if (question_title.length < min_title) {
@@ -68,13 +84,13 @@ var disable_question_submit = function(question_title, question_content, min_tit
 
 		// For tag 
 
-		if (tags != "" && tags != undefined && tags != null) {
+		if (tags.length > 0) {
 			$('#indicator_tag').html('');
 		}
 
 		// Check
 
-		if (question_title.length < min_title || question_title.length > max_title || question_content.length < min_content || tags == '') {
+		if (question_title.length < min_title || question_title.length > max_title || question_content.length < min_content || tags.length == 0) {
 			$('#post_question_button').prop('disabled', true);
 		} else {
 			$('#post_question_button').prop('disabled', false);
@@ -99,7 +115,7 @@ Template.create_question.events = {
 		var min_question_content_length = 100;
 		var question_title = $('#question_title_input').val().trim();
 		var question_content = $('#question_content').val().trim();
-		var tags = $('#tag_input').val().trim();
+		var tags = $('#tag_input').tokenInput("get");
 
 		console.log(tags);
 		disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);
@@ -117,7 +133,7 @@ Template.create_question.events = {
 		var min_question_content_length = 100;
 		var question_title = $('#question_title_input').val().trim();
 		var question_content = $('#question_content').val().trim();
-		var tags = $('#tag_input').val().trim();
+		var tags = $('#tag_input').tokenInput("get");
 
 		disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);
 
@@ -134,10 +150,15 @@ Template.create_question.events = {
 
 		var question_title = $('#question_title_input').val().trim();
 		var question_content = $('#question_content').val().trim();
-		var tags_input = $('#tag_input').val();
-		var tags_array = tags_input.split(',');
+		var tags_input = $('#tag_input').tokenInput("get");
+		var tags_array = [];
 
-		console.log(tags_input);
+		// creating the right tags_array structure
+		for (var i = 0; i < tags_input.length; i++) {
+			tags_array.push(tags_input[i].tag_name);
+		}
+
+		console.log(tags_array);
 
 		var user_object = Meteor.user();
 		var username = user_object.username;

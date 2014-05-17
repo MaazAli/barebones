@@ -89,7 +89,7 @@ var update_post_thumbs = function(id) {
 		// to check if the user voted on it. Too intensive, leaving
 		// it out for now. Will look for an alternative when cookies
 		// are removed.
-		console.log("Update Thumbs called!");
+		//console.log("Update Thumbs called!");
 		var current_user_id = Meteor.userId();
 		if (current_user_id) {
 			if (element_up.parents('.question-wrapper').length) {

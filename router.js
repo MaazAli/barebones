@@ -9,6 +9,39 @@ Router.map( function() {
 		}
 	});
 
+	this.route('query_tags_token_input', {
+		where: 'server',
+		path: '/autocomplete/tags',
+		// layoutTemplate: 'api_layout',
+		// template: "query_tags_token_input",
+		// waitOn : function () { 
+		// 	return Meteor.subscribe('tags');
+		// },
+		// data: function() {
+		// 	var params = this.params;
+
+		// 	console.log(params.q);
+
+		// 	var return_object = {
+		// 		tags: JSON.stringify(Tags.find({tag_name: { $regex : params.q, $options:"i" }}, {fields: {tag_name: 1}}).fetch())
+		// 	}
+
+		// 	console.log(return_object);
+		// 	return return_object;
+		// }
+		action: function() {
+			var params = this.params;
+			this.response.writeHead(200, {'Content-Type': 'application/json'});
+			var all_tags = Tags.find({tag_name: { $regex : params.q, $options:"i" }}, {fields: {tag_name: 1}}).fetch();
+			for (var i=0; i < all_tags.length; i++) {
+				all_tags[i].id = all_tags[i]._id;
+				delete all_tags[i]._id;
+			}
+
+			this.response.end(JSON.stringify(all_tags));
+		}
+	});
+
 	this.route('register_page', {
 		path: '/register/',
 		template: 'register_form',
