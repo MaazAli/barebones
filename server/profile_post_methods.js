@@ -42,15 +42,27 @@ Meteor.methods({
 	},
 	profile_post_like: function(profile_post_id, user_id) {
 
+
+		if (user_id != Meteor.userId()) {
+			// Someone is trying to spoof...
+			// Assumption: Only the current user can like content
+			return;
+		}
+
 		var profile_post = Profile_posts.findOne({_id: profile_post_id});
 		if (profile_post.users_liked.indexOf(user_id) > -1) {
-			Profile_posts.update({_id: profile_post_id}, {$pull: {users_liked: user_id}});
-			Profile_posts.update({_id: profile_post_id}, {$inc: {like_count: -1}});
+			Profile_posts.update({_id: profile_post_id}, {$pull: {users_liked: user_id}, $inc: {like_count: -1}});
 			return "unliked";			
 		} else if (profile_post.users_liked.indexOf(user_id) == -1) {
-			Profile_posts.update({_id: profile_post_id}, {$push: {users_liked: user_id}});
-			Profile_posts.update({_id: profile_post_id}, {$inc: {like_count: 1}});
+			Profile_posts.update({_id: profile_post_id}, {$push: {users_liked: user_id}, $inc : {like_count: 1}});
+			
+
+			// Send an alert to the user that got liked
+			Meteor.call('create_alert', profile_post.user_id, user_id, Meteor.user().username, "profile_post", profile_post_id, "like");
+
+
 			return "liked";
+
 		}
 
 	}

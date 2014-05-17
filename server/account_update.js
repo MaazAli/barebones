@@ -30,19 +30,26 @@ Meteor.methods({
 
 		Meteor.users.update({_id: this.userId}, {$set: new_object});
 	},
-	profile_follow: function(follower, followee) {
-		Meteor.users.update({_id: followee}, {$inc: {follower_count: 1}});
-		Meteor.users.update({_id: follower}, {$inc: {following_count: 1}});
+	profile_follow: function(follower_id, followee_id) {
 
-		Meteor.users.update({_id: followee}, {$push: {followers: follower}});
-		Meteor.users.update({_id: follower}, {$push: {following: followee}});
+		if (follower_id != Meteor.userId()) {
+			return null;
+		}
+
+		Meteor.users.update({_id: followee_id}, {$inc: {follower_count: 1}});
+		Meteor.users.update({_id: follower_id}, {$inc: {following_count: 1}});
+
+		Meteor.users.update({_id: followee_id}, {$push: {followers: follower_id}});
+		Meteor.users.update({_id: follower_id}, {$push: {following: followee_id}});
+
+		Meteor.call('create_alert', followee_id, follower_id, Meteor.user().username, "user", followee_id, "follow");
 	},
-	profile_unfollow: function(follower, followee) {
-		Meteor.users.update({_id: followee}, {$inc: {follower_count: -1}});
-		Meteor.users.update({_id: follower}, {$inc: {following_count: -1}});
+	profile_unfollow: function(follower_id, followee_id) {
+		Meteor.users.update({_id: followee_id}, {$inc: {follower_count: -1}});
+		Meteor.users.update({_id: follower_id}, {$inc: {following_count: -1}});
 
-		Meteor.users.update({_id: followee}, {$pull: {followers: follower}});
-		Meteor.users.update({_id: follower}, {$pull: {following: followee}});		
+		Meteor.users.update({_id: followee_id}, {$pull: {followers: follower_id}});
+		Meteor.users.update({_id: follower_id}, {$pull: {following: followee_id}});		
 	},
 	user_avatar_changer: function(user_id, img_url, height, width) {
 		var avatar_object = {};
