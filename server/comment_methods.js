@@ -80,6 +80,9 @@ Meteor.methods({
 			}
 
 
+			// We only send an alert when the person initially does something (IN this case upvotes/downvotes)
+			Meteor.call('create_alert', content_check.user_id, user_id, Meteor.user().username, content_type, content_id, "comment");
+
 			return newID;
 	}
 });

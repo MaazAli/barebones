@@ -155,13 +155,18 @@
 
 </template>
 
+<template name="list_alerts">
+	{{#each alert}}
+		{{username}} : {{action}}
+	{{/each}}
+</template>
 
 <template name="profile_sidebar">
 
 	<div class="profile-sidebar">
 	{{#if currentUser}}
 		{{#if user_owns_profile ./username}}
-			
+			{{> list_alerts}}
 		{{else}}
 
 			{{#if user_following ./_id}}
@@ -176,6 +181,11 @@
 	{{else}}
 		{{comment Things to display when the user is not logged in}}
 	{{/if}}
+
+			Question Count: {{question_count}}<br>
+			Answer Count: {{answer_count}}<br>
+			Comment Count: {{comment_count}}<br>
+			Total Levels: {{level_count}}<br>
 
 	</div>
 </template>

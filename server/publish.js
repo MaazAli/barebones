@@ -26,3 +26,7 @@ Meteor.publish('profile_posts', function() {
 Meteor.publish('all_users', function() {
 	return Meteor.users.find({});
 });
+
+Meteor.publish('user_alerts', function() {
+	return User_alerts.find({});
+});

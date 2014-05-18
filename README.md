@@ -18,3 +18,18 @@ Proposed structure for influence points
 	influence_points : {
 				tag_name: {influence_points: 23, level: 1},
 				tag_name_2: {influence_points: 54, level: 4}}
+- Implemented
+
+
+-------------------------------
+
+Alert Actions: 
+	- Likes your content
+	- Comment on your content
+	- Upvote your content
+	- Downvote your content
+	- Follows you
+	- Post's on your profile
+	- Answers your question
+
+-------------------------------

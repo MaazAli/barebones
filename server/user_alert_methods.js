@@ -12,6 +12,13 @@ Meteor.methods({
 			return null;
 		}
 
+		// If the user commented on his/her own post then we shouldn't alert them.
+		// User isn't allowed to like / upvote/downvote their own posts so that's already handled
+
+		if (alerted_user_id == user_id && action == "comment") {
+			return null; // Nothing was updated
+		}
+
 
 		// If the same exact alert has been built again, ignore it.
 		// For example: If someone liked your post, then unliked it

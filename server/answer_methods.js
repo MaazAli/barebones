@@ -60,6 +60,11 @@ Meteor.methods({
 					console.log(error);
 				});
 
+				// Send out an alert if the person that answered it is not the person that asked the question
+				if (current_question.user_id != user_id) {
+					Meteor.call('create_alert', current_question.user_id, user_id, username, "answer", newID, "insert");
+				}
+
 				return newID;
 
 			}
@@ -97,6 +102,10 @@ Meteor.methods({
 			console.log(user_object);
 			// Add the user's id as well 
 			Answers.update({_id: answer_id}, {$push: {users_voted: user_object}});
+
+			// We only send an alert when the person initially does something (IN this case upvotes/downvotes)
+			Meteor.call('create_alert', answer.user_id, user_id, Meteor.user().username, "answer", answer_id, user_object.score + " vote");
+
 			return "added";
 
 		} else if (check != -1) {

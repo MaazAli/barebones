@@ -21,7 +21,7 @@ Template.answer_submission_form.events = {
 					console.log('create_answer error ' + error);
 					console.log('create_answer result ' + result);
 				} else if (result != null) {
-					console.log('Your answer has been posted above!');
+					console.log('Your answer has beenhis posted above!');
 				} else {
 					console.log('Something went wrong!');
 				}
@@ -49,6 +49,35 @@ Template.answer_submission_form.events = {
 Template.answer_submission_form.rendered = function() {
 	$('#post_answer_button').prop('disabled', true);
 }
+
+
+Template.display_question.events({
+	'click .best-answer-handler' : function(event) {
+		var answer_id = this._id;
+		var question_id = this.question_id;
+
+		Meteor.call('update_best_answer', question_id, answer_id, function(error, result) {
+			if (!error) {
+				if (result == "added") {
+					$('.best-answer-handler').removeClass('best-answer-selected');
+					$('.best-answer-display-pre').removeClass('best-answer-display');
+					$('#best_answer_handler_' + answer_id).addClass('best-answer-selected');
+					$('#best_answer_display_' + answer_id).addClass('best-answer-display');
+				} else if (result == "removed") {
+					$('#best_answer_handler_' + answer_id).removeClass('best-answer-selected');
+					$('#best_answer_display_' + answer_id).removeClass('best-answer-display');
+				}
+			}
+		});
+
+	}
+});
+
+Template.display_question.is_user_asker = function(question_user_id) {
+	return (question_user_id == Meteor.userId()); 
+}
+
+
 
 var update_post_thumbs = function(id) {
 	var element_up = $('.post-action-bar').find("[data-content-id='" + id + "'][data-increment='1']" );;
@@ -260,19 +289,18 @@ Template.post_action_bar.rendered = function() {
 	console.log(this.data._id);
 	update_post_thumbs(this.data._id);
 	
-};
-
+}
 
 
 Template.display_question.answer = function() {
 
 	return Answers.find({question_id: this._id}, {sort: {created_timestamp: 1}});
 
-};
+}
 
 Template.display_question.comment = function() {
 	return Comments.find({content_id: this._id}, {sort: {created_timestamp: 1}});
-};
+}
 
 Template.display_question.alreadyAnswered = function() {
 	var answer = Answers.findOne({question_id: this._id, user_id: Meteor.userId()});
@@ -282,14 +310,23 @@ Template.display_question.alreadyAnswered = function() {
 	} else {
 		return false;
 	}
-};
+}
 
 
 
 Template.display_question.rendered = function() {
+	// For best answer 
+	var question = Questions.findOne({_id: this.data._id});
+
+	if (question.best_answer != '') {
+		$('.best-answer-handler').removeClass('best-answer-selected');
+		$('.best-answer-display-pre').removeClass('best-answer-display');
+		$('#best_answer_handler_' + question.best_answer).addClass('best-answer-selected');
+		$('#best_answer_display_' + question.best_answer).addClass('best-answer-display');		
+	}
 
 	var site_title = "bearbones";
 
-	//document.title = 
+	document.title = question.tags[0] + " - " + question.title + " | " + site_title;
 
 }

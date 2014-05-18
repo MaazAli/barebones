@@ -61,7 +61,12 @@
 			{{#each answer}}
 				<div class="post-wrapper answer-wrapper">
 
+					{{#if is_user_asker ../user_id}}
+						<div class="best-answer-handler" id="best_answer_handler_{{_id}}"><i class="fa fa-check"></i></div>
+					{{/if}}
+
 					<div class="post-side">
+						<div class="best-answer-display-pre" id="best_answer_display_{{_id}}"></div>
 						<img class="post-profile-pic" src="{{get_user_profile_picture this.user_id}}" alt="{{username}}" />
 					</div>
 					
@@ -96,7 +101,6 @@
 					{{/if}}
 					<input type="hidden" class="content-type-indicator" value="answer">
 				</div>
-
 			{{/each}}
 
 

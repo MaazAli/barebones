@@ -38,6 +38,11 @@ Meteor.methods({
 			created_timestamp: Date.now(),
 		});
 
+		// Generate an alert, only if someone else made a profile-post on the user's profile and not themselves
+		if (profile_user_id != user_id) {
+			Meteor.call('create_alert', profile_user_id, user_id, username, "profile-post", newID, "insert");
+		}
+
 		return newID;
 	},
 	profile_post_like: function(profile_post_id, user_id) {

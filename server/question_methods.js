@@ -56,6 +56,7 @@ Meteor.methods({
 						question_open: true,
 						comment_count: 0,
 						vote_score: 0,
+						best_answer: '',
 						users_voted: users_voted
 				});
 
@@ -129,6 +130,10 @@ Meteor.methods({
 			console.log(user_object);
 			// Add the user's id as well 
 			Questions.update({_id: question_id}, {$push: {users_voted: user_object}});
+
+			// We only send an alert when the person initially does something (IN this case upvotes/downvotes)
+			Meteor.call('create_alert', question.user_id, user_id, Meteor.user().username, "question", question_id, user_object.score + " vote");
+
 			return "added";
 
 		} else if (check != -1) {
@@ -167,8 +172,39 @@ Meteor.methods({
 				return "not updated";
 			}
 		}
+	},
+	update_best_answer: function(question_id, answer_id) {
+
+		var question = Questions.findOne({_id: question_id});
+		var answer = Answers.findOne({_id: answer_id});
+
+		if (!answer) {
+			return null;
+		}
+
+		if (!question) {
+			return null;
+		}
+
+		// Ensure that the user that created the question is the one that's actually picking the best answer
+		if (question.user_id != Meteor.userId()) {
+			return null;
+		}
+
+		// We remove best answer if it was already selected, and select it if it wasn't.
+
+		if (question.best_answer == answer_id) {
+			Questions.update({_id: question_id}, {$set: {best_answer: ''}});
+			return "removed";
+		} else {
+			Questions.update({_id: question_id}, {$set: {best_answer: answer_id}});
+
+			// Create an alert 
+			Meteor.call('create_alert', answer.user_id, Meteor.userId(), Meteor.user().username, "answer", answer_id, "best answer");
 
 
+			return "added";
+		}
 	}
 
 });

@@ -17,6 +17,7 @@
 
 .post-side {
 	float: left;
+	position: relative;
 }
 
 .post-main {
@@ -94,11 +95,14 @@
 }
 
 .post-profile-pic {
+	position: relative;
+	z-index: 2;
 	width: 80px;
 	height: 80px;
 	border-radius: 50px;
 	border: 2px solid #fff;
 	box-shadow: 0 0 5px #B9B9B9;
+	background-color: #fff;
 
 }
 
@@ -253,3 +257,45 @@
 	    height: 0px;
 	    left: -10px;	
 	}
+
+
+/* ---- Best Answer ----*/
+
+.best-answer-display {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 80px;
+	height: 80px;
+	border-radius: 100px;
+	box-shadow: 0 0 15px rgba(101, 190, 4, 0.59);
+	transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+}
+
+.best-answer-handler {
+	position: absolute;
+	top: -1px;
+	right: -1px;
+	padding: 10px;
+	border-top-right-radius: 3px;
+	background-color: #F1F1F1;
+	color: #ccc;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-webkit-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+}
+
+	.best-answer-handler:hover {
+		background-color: #83DA00;
+		color: #fff;
+	}
+
+.best-answer-selected {
+	background-color: #83DA00;
+	color: #fff;	
+}
