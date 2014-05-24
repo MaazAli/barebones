@@ -63,12 +63,15 @@ Meteor.methods({
 			
 
 			// Send an alert to the user that got liked
-			Meteor.call('create_alert', profile_post.user_id, user_id, Meteor.user().username, "profile_post", profile_post_id, "like");
+			Meteor.call('create_alert', profile_post.user_id, user_id, Meteor.user().username, "profile-post", profile_post_id, "like");
 
 
 			return "liked";
 
 		}
 
+	},
+	increment_comment_count_profile_post: function(id) {
+		Profile_posts.update({_id: id}, {$inc: {comment_count: 1}});
 	}
 });

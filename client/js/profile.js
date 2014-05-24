@@ -269,8 +269,13 @@ Template.profile_cover.events = {
 
 
 Template.list_alerts.alert = function() {
-	console.log(User_alerts.find({}).fetch());
 	var alerts = User_alerts.find({alerted_user_id: Meteor.userId()}, {sort: {event_date: -1}, limit: 10}).fetch();
 	console.log(alerts);
 	return alerts;
+}
+
+
+Template.profile_main.rendered = function() {
+	var site_name = "barebones";
+	document.title = this.data.username + " | " + site_name;
 }

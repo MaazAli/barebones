@@ -16,3 +16,9 @@ Template.question_list_front_page.divides3 = function(index) {
 	}
 
 }
+
+Template.question_list_front_page.rendered = function() {
+	var site_name = "barebones";
+	var site_slogan = "A simple question and answering site";
+	document.title = site_name + " | " + site_slogan
+}

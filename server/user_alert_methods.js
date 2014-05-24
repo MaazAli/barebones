@@ -1,8 +1,8 @@
 Meteor.methods({
 	create_alert: function(alerted_user_id, user_id, username, content_type, content_id, action) {
-
+		var alerted_username = get_username_by_id(alerted_user_id);
 		// We can also make the assumption that create_alert is only called from the server
-		// in which case we don't have to worry about all checks.
+		// in which case we don't have to worry about all these checks.
 
 		if (user_id != Meteor.userId()) {
 			return null;
@@ -26,11 +26,24 @@ Meteor.methods({
 		// So if they like it again, ever, in history. There is no need
 		// for another alert.
 
+
+
 		var previous_alert = User_alerts.findOne({alerted_user_id: alerted_user_id, user_id: user_id, username: username, content_type: content_type, content_id: content_id, action: action});
 
+		// This condition will also trap a new comment made by the same user on the same post.
+		// In which case we should update the previous alert and update it's event_date
+		if (previous_alert && action == "comment") {
 
+			// Reset view_date to 0 because the alert has now changed so we should show it again! 
+			User_alerts.update({_id: previous_alert._id}, {$set: {view_date: 0}});
+
+			// We should also update event date to the current date
+			User_alerts.update({_id: previous_alert._id}, {$set: {event_date: Date.now()}});
+		}
+
+		// If any other action we shouldn't worry about it
 		if (previous_alert) {
-			return null; // Nothing happened essentially
+			return null; // Nothing essentially happened
 		}
 
 
@@ -55,6 +68,7 @@ Meteor.methods({
 		// Create new alert if no updates are made to previous alerts, then we need to create a new one!
 		var newID = User_alerts.insert({
 			alerted_user_id: alerted_user_id,
+			alerted_username: alerted_username, 
 			user_id: [
 				user_id
 			],
@@ -69,7 +83,5 @@ Meteor.methods({
 		});
 
 		return newID;		
-
-
 	}
 });

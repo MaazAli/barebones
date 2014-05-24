@@ -315,18 +315,17 @@ Template.display_question.alreadyAnswered = function() {
 
 
 Template.display_question.rendered = function() {
-	// For best answer 
-	var question = Questions.findOne({_id: this.data._id});
 
-	if (question.best_answer != '') {
+
+	if (this.data.best_answer != '') {
 		$('.best-answer-handler').removeClass('best-answer-selected');
 		$('.best-answer-display-pre').removeClass('best-answer-display');
-		$('#best_answer_handler_' + question.best_answer).addClass('best-answer-selected');
-		$('#best_answer_display_' + question.best_answer).addClass('best-answer-display');		
+		$('#best_answer_handler_' + this.data.best_answer).addClass('best-answer-selected');
+		$('#best_answer_display_' + this.data.best_answer).addClass('best-answer-display');		
 	}
 
-	var site_title = "bearbones";
+	var site_title = "barebones";
 
-	document.title = question.tags[0] + " - " + question.title + " | " + site_title;
+	document.title = this.data.tags[0] + " - " + this.data.title + " | " + site_title;
 
 }

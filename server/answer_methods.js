@@ -104,7 +104,7 @@ Meteor.methods({
 			Answers.update({_id: answer_id}, {$push: {users_voted: user_object}});
 
 			// We only send an alert when the person initially does something (IN this case upvotes/downvotes)
-			Meteor.call('create_alert', answer.user_id, user_id, Meteor.user().username, "answer", answer_id, user_object.score + " vote");
+			Meteor.call('create_alert', answer.user_id, user_id, Meteor.user().username, "answer", answer_id, user_object.score + "-vote");
 
 			return "added";
 

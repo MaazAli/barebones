@@ -1,5 +1,8 @@
 Template.create_question.rendered = function() {
 
+	var site_name = "barebones";
+	document.title = "Ask Question | " + site_name;
+
 	$('#tag_input').tokenInput("/autocomplete/tags", {
             	theme: "facebook",
             	propertyToSearch: "tag_name",

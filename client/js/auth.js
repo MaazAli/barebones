@@ -222,3 +222,9 @@ Template.header.events = {
 
 
 }
+
+Template.register_form.rendered = function() {
+	var site_name = "barebones";
+
+	document.title = "Register | " + site_name;
+}

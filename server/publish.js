@@ -27,6 +27,6 @@ Meteor.publish('all_users', function() {
 	return Meteor.users.find({});
 });
 
-Meteor.publish('user_alerts', function() {
+Meteor.publish('all_user_alerts', function() {
 	return User_alerts.find({});
 });

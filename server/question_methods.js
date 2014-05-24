@@ -132,7 +132,7 @@ Meteor.methods({
 			Questions.update({_id: question_id}, {$push: {users_voted: user_object}});
 
 			// We only send an alert when the person initially does something (IN this case upvotes/downvotes)
-			Meteor.call('create_alert', question.user_id, user_id, Meteor.user().username, "question", question_id, user_object.score + " vote");
+			Meteor.call('create_alert', question.user_id, user_id, Meteor.user().username, "question", question_id, user_object.score + "-vote");
 
 			return "added";
 
@@ -200,7 +200,7 @@ Meteor.methods({
 			Questions.update({_id: question_id}, {$set: {best_answer: answer_id}});
 
 			// Create an alert 
-			Meteor.call('create_alert', answer.user_id, Meteor.userId(), Meteor.user().username, "answer", answer_id, "best answer");
+			Meteor.call('create_alert', answer.user_id, Meteor.userId(), Meteor.user().username, "answer", answer_id, "best-answer");
 
 
 			return "added";

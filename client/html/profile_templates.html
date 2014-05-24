@@ -56,8 +56,11 @@
 
 
 <template name="profile_main">
-
 	<div class="profile-main">
+		{{#if user_owns_profile ./username}}
+			<h2> Alerts </h2>
+			{{> list_alerts}}
+		{{/if}}
 		{{#if currentUser}}
 			{{> profile_post_submission_form}}
 		{{/if}}
@@ -157,7 +160,7 @@
 
 <template name="list_alerts">
 	{{#each alert}}
-		{{username}} : {{action}}
+		{{{user_alert_message this}}}<br />
 	{{/each}}
 </template>
 
@@ -166,6 +169,7 @@
 	<div class="profile-sidebar">
 	{{#if currentUser}}
 		{{#if user_owns_profile ./username}}
+			<h2> Alerts </h2>
 			{{> list_alerts}}
 		{{else}}
 
@@ -181,6 +185,8 @@
 	{{else}}
 		{{comment Things to display when the user is not logged in}}
 	{{/if}}
+
+			<h2> Statistics </h2>
 
 			Question Count: {{question_count}}<br>
 			Answer Count: {{answer_count}}<br>
