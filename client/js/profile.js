@@ -2,6 +2,10 @@ Template.profile_main.recent_questions = function () {
 	return Questions.find({user_id: this._id}, {sort: {created_timestamp: -1}})
 };
 
+Template.profile_main.recent_answers = function () {
+	return Answers.find({user_id: this._id}, {sort: {created_timestamp: -1}});
+};
+
 Template.profile_post_submission_form.profile_post_check = function(username) {
 	if (username == Meteor.user().username) {
 		return "What's on your mind?";
@@ -270,7 +274,7 @@ Template.profile_cover.events = {
 
 Template.list_alerts.alert = function() {
 	var alerts = User_alerts.find({alerted_user_id: Meteor.userId()}, {sort: {event_date: -1}, limit: 10}).fetch();
-	console.log(alerts);
+
 	return alerts;
 }
 
@@ -279,3 +283,11 @@ Template.profile_main.rendered = function() {
 	var site_name = "barebones";
 	document.title = this.data.username + " | " + site_name;
 }
+
+Template.profile_main.events({
+	'click #profile_tabs a' : function(event) {
+		console.log('clicked');
+		event.preventDefault();
+		$(event.target).tab('show');
+	}
+});

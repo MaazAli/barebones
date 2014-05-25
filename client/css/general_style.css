@@ -1,7 +1,10 @@
 body, h1, h2, h3, h4, h5, h6 {
 	font-family: Open Sans, sans-serif;
 	color: #5C5C5C;
-	background-color: #e7e7e7;
+}
+
+body {
+	background-color: #e7e7e7;	
 }
 
 .clearfix {

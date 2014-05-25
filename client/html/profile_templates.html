@@ -51,31 +51,83 @@
 		<div class="cover-shadow"></div>
 	</div>
 
+
 </template>
 
 
 
 <template name="profile_main">
-	<div class="profile-main">
+
+	<ul id="profile_tabs" class="nav nav-tabs">
+		<li class="active"><a href="#main">Profile Posts</a></li>
 		{{#if user_owns_profile ./username}}
-			<h2> Alerts </h2>
-			{{> list_alerts}}
+		<li><a href="#alerts">Alerts (Temp)</a></li>
 		{{/if}}
-		{{#if currentUser}}
-			{{> profile_post_submission_form}}
-		{{/if}}
+		<li><a href="#questions">Questions</a></li>
+		<li><a href="#answers">Answers</a></li>
+		<li><a href="#user-stats">Statistics</a></li>
+	</ul>
 
-		{{#each profile_post}}
-			{{> profile_post_item}}
-		{{/each}}
+	<div class="profile-main">
+		<div class="tab-content">
 
+			<div class="tab-pane fade in active" id="main">
+				{{#if currentUser}}
+					{{> profile_post_submission_form}}
+				{{/if}}
 
-		<div class="title">Recent Questions by {{username}}</div>
-		{{#each recent_questions}}
-			<div class="question-list-item">
-				<a href="{{pathFor 'question_display' params=this}}">{{title}}</a>
+				{{#each profile_post}}
+					{{> profile_post_item}}
+				{{/each}}
 			</div>
-		{{/each}}
+
+			{{#if user_owns_profile ./username}}
+				<div class="tab-pane fade" id="alerts">				
+					<h2> Alerts </h2>
+					{{> list_alerts}}				
+				</div>
+			{{/if}}
+
+			<div class="tab-pane fade" id="questions">
+
+				<h2>Recent Questions</h2>
+
+				{{#each recent_questions}}
+					<div class="question-list-item">
+						<a href="{{pathFor 'question_display' params=this}}">{{title}}</a>
+					</div>
+				{{/each}}
+
+			</div>
+
+			<div class="tab-pane fade" id="answers">
+
+				<h2>Recent Answers</h2>
+
+				{{#each recent_answers}}
+					<div class="question-list-item">
+						<a href="/questions/{{question_id}}/">{{content}}</a>
+					</div>
+				{{/each}}
+
+			</div>	
+
+			<div class="tab-pane fade" id="user-stats">
+				<h2>Statistics</h2>
+				Question Count: {{question_count}}<br>
+				Answer Count: {{answer_count}}<br>
+				Comment Count: {{comment_count}}<br>
+				Total Levels: {{level_count}}<br>
+
+				{{#each arrayify_object influence}}
+					<h4>{{name}}</h4>
+					Level: {{value.level}}<br>
+					Influence Points: {{value.influence_points}}<br>
+				{{/each}}
+			</div>		
+
+		</div>
+
 	</div>
 
 </template>
@@ -169,10 +221,8 @@
 	<div class="profile-sidebar">
 	{{#if currentUser}}
 		{{#if user_owns_profile ./username}}
-			<h2> Alerts </h2>
-			{{> list_alerts}}
-		{{else}}
 
+		{{else}}
 			{{#if user_following ./_id}}
 				<button id="profile_unfollow" type="submit" class="btn btn-primary btn-sm btn-block">Unfollow</button>
 			{{else}}
@@ -185,13 +235,6 @@
 	{{else}}
 		{{comment Things to display when the user is not logged in}}
 	{{/if}}
-
-			<h2> Statistics </h2>
-
-			Question Count: {{question_count}}<br>
-			Answer Count: {{answer_count}}<br>
-			Comment Count: {{comment_count}}<br>
-			Total Levels: {{level_count}}<br>
 
 	</div>
 </template>

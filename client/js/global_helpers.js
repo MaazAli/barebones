@@ -18,7 +18,7 @@ UI.registerHelper('votes_positive', function(votes) {
 });
 
 UI.registerHelper('user_owns_profile', function(username) {
-
+	console.log(username);
 	if(Meteor.user() == null) {
 		return false;
 	}
@@ -28,4 +28,13 @@ UI.registerHelper('user_owns_profile', function(username) {
 	} else {
 		return false;
 	}
+
+});
+
+UI.registerHelper('arrayify_object', function(obj) {
+	result = [];
+	for (var key in obj) {
+		result.push({name:key, value: obj[key]});
+	}
+	return result;
 });

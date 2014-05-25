@@ -67,7 +67,7 @@ UI.registerHelper('user_alert_message', function(alert) {
 		if (alert.content_type == "question") {
 			url_text = "your question";
 			alerted_userslugged = slug_username(alert.alerted_username);
-			url_builder = '/questions/' + question_id;
+			url_builder = '/questions/' + alert.content_id;
 
 
 			alert_message = format_users(alert.username) + ' commented on <a href="' + url_builder + '">' + url_text + '</a>.';
@@ -105,7 +105,7 @@ UI.registerHelper('user_alert_message', function(alert) {
 		if (alert.content_type == "question") {
 			url_text = "your question";
 			alerted_userslugged = slug_username(alert.alerted_username);
-			url_builder = '/questions/' + question_id;
+			url_builder = '/questions/' + alert.content_id;
 
 
 			alert_message = format_users(alert.username) + ' up voted <a href="' + url_builder + '">' + url_text + '</a>.';
@@ -131,7 +131,7 @@ UI.registerHelper('user_alert_message', function(alert) {
 		if (alert.content_type == "question") {
 			url_text = "your question";
 			alerted_userslugged = slug_username(alert.alerted_username);
-			url_builder = '/questions/' + question_id;
+			url_builder = '/questions/' + alert.content_id;
 
 
 			alert_message = format_users(alert.username) + ' down voted <a href="' + url_builder + '">' + url_text + '</a>.';
