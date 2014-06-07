@@ -10,11 +10,8 @@ meteor-font-awesome
 accounts-base
 accounts-password
 iron-router
-meteor-tagsinput
 reactive-cookie
 blaze-layout
 timeago
-meteor-nprogress
 iron-router-progress
 http
-meteor-pagedown-bootstrap
