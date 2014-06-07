@@ -76,7 +76,10 @@ Meteor.methods({
 					console.log(error);
 				});				
 			} else if (content_type == "profile-post") {
-				// Not implemented yet
+				Meteor.call('increment_comment_count_profile_post', content_id, function(error, result) {
+					console.log(result);
+					console.log(error);
+				});	
 			}
 
 

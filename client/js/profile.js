@@ -35,6 +35,7 @@ Template.profile_sidebar.user_following = function(username) {
 
 
 Template.profile_post_submission_form.rendered = function() {
+
 	$('#profile_post_submit').prop('disabled', true);
 }
 
@@ -282,11 +283,13 @@ Template.list_alerts.alert = function() {
 Template.profile_main.rendered = function() {
 	var site_name = "barebones";
 	document.title = this.data.username + " | " + site_name;
+
+	// On load set the profile tab to the first one
+	$('#profile_tabs a:first').tab('show');
 }
 
 Template.profile_main.events({
 	'click #profile_tabs a' : function(event) {
-		console.log('clicked');
 		event.preventDefault();
 		$(event.target).tab('show');
 	}
