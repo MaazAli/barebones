@@ -7,11 +7,15 @@ standard-app-packages
 insecure
 meteor-bootstrap-3
 meteor-font-awesome
-accounts-base
 accounts-password
-iron-router
 reactive-cookie
 blaze-layout
 timeago
 iron-router-progress
 http
+jquery
+accounts-base
+meteor-marked
+meteor-require
+showdown
+iron-router

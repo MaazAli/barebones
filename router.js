@@ -71,7 +71,7 @@ Router.map( function() {
 			return Meteor.subscribe('tags');
 		},
 		onBeforeAction: function () {
-			NProgress.start();
+			//NProgress.start();
 			var id = this.params._id;
 
 			// Updating the view count for Tags and setting the apropriate cookies

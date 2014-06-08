@@ -63,6 +63,7 @@ Template.create_question.rendered = function() {
 
 	$('#post_question_button').prop('disabled', true);
 
+
 };
 
 var disable_question_submit = function(question_title, question_content, min_title, max_title, min_content, tags) {
@@ -129,7 +130,6 @@ Template.create_question.events = {
 	// For previewing the output
 	'keyup, keypress, blur #question_content' : function(event) {
 		var content = $('#question_content').val().trim();
-		$('#preview_output').html(content);
 
 		var min_title_length = 5;
 		var max_title_length = 75;
@@ -139,6 +139,7 @@ Template.create_question.events = {
 		var tags = $('#tag_input').tokenInput("get");
 
 		disable_question_submit(question_title, question_content, min_title_length, max_title_length, min_question_content_length, tags);
+		Session.set("question_content", question_content);
 
 	},
 
@@ -197,3 +198,7 @@ Template.create_question.events = {
 
 	}
 };
+
+Template.create_question.question_content = function() {
+	return Session.get("question_content");
+} 

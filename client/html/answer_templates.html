@@ -11,6 +11,11 @@
 			<input type="hidden" id="question_id" value="{{this._id}}" />
 		</div>
 
+		<div class="form-group">
+			<label> Live Preview </label>
+			{{#markdown}}{{{answer_content}}}{{/markdown}}
+		</div>
+
 		<div style="float: right">
 			<div class="char-indicator">20 to go</div>
 			<button id="post_answer_button" type="submit" class="btn btn-success">Post my Answer!</button>

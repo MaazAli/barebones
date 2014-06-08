@@ -43,11 +43,18 @@ Template.answer_submission_form.events = {
 			$('#post_answer_button').prop('disabled', false);
 			$('.char-indicator').html('');
 		}
+
+		// Set a session variable to show preview in the preview 
+		Session.set('answer_content', answer_content);
 	}
 }
 
 Template.answer_submission_form.rendered = function() {
 	$('#post_answer_button').prop('disabled', true);
+}
+
+Template.answer_submission_form.answer_content = function() {
+	return Session.get('answer_content');
 }
 
 
