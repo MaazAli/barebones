@@ -9,7 +9,7 @@
 			</div>
 			<div class="modal-body">
 
-				<img id="avatar_changer_preview" style="float: left" class="profile-picture-lg" src="{{profile.avatar.url}}" />
+				<div id="avatar_changer_preview" class="profile-picture-lg" style="float: left; background-image: url('{{profile.avatar.url}}')"></div>
 
 				<div  style="margin-left: 100px; padding-left: 20px; padding-top: 20px;" class="form-group">
 					<label for="avatar_changer_url">Avatar Url</label>
@@ -25,7 +25,7 @@
 	</div>
 </div>
 
-	<div class="profile-cover-wrapper" style="background: url('{{profile.profile_cover.url}}');">
+	<div class="profile-cover-wrapper" style="background-image: url('{{profile.profile_cover.url}}');">
 		{{#if user_owns_profile username}}
 			<a id="profile-cover-changer-handler" class="profile-cover-changer-handler" href="javascript:void(0)"><i class="fa fa-picture-o"></i> Change your Cover</a>
 			<div class="profile-cover-changer-wrapper close">
@@ -39,9 +39,9 @@
 		{{/if}}
 		<div class="member-glance">
 			{{#if user_owns_profile username}}
-				<a href="javascript:void(0)" data-toggle="modal" data-target="#avatar_changer"><img class="profile-picture" src="{{profile.avatar.url}}" /></a>
+				<a href="javascript:void(0)" data-toggle="modal" data-target="#avatar_changer"><div class="profile-picture-lg" style="background-image: url('{{profile.avatar.url}}'); float: left;"></div></a>
 			{{else}}
-				<img class="profile-picture" src="{{profile.avatar.url}}" />
+				<div class="profile-picture-lg" style="background-image: url('{{profile.avatar.url}}'); float: left;"></div>
 			{{/if}}
 			<div class="profile-username">{{username}}</div>
 			<div class="profile-sub-info">{{profile.gender}}, from {{profile.location}}</div>
@@ -136,7 +136,7 @@
 <template name="profile_post_submission_form">
 	<div class="profile-post-wrapper">
 		<div class="profile-post-side">
-			<a href="/members/{{user_slugged currentUser.username}}"><img class="profile-picture-m" src="{{get_user_profile_picture currentUser._id}}" /></a>
+			<a href="/members/{{user_slugged currentUser.username}}"><div class="profile-picture-m" style="background-image: url('{{get_user_profile_picture currentUser._id}}')"></div></a>
 		</div>
 		<div class="profile-post-main">
 
@@ -158,7 +158,7 @@
 
 	<div class="profile-post-wrapper">
 		<div class="profile-post-side">
-			<a href="/members/{{user_slugged this.username}}"><img class="profile-picture-m" src="{{get_user_profile_picture this.user_id}}" /></a>
+			<a href="/members/{{user_slugged this.username}}"><div class="profile-picture-m" style="background-image: url('{{get_user_profile_picture this.user_id}}')"></div></a>
 		</div>
 
 		<div class="profile-post-main">

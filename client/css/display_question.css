@@ -139,6 +139,10 @@
 		height: 34px;
 	}
 
+	.comment-side {
+		float: left;
+	}
+
 	.comment-main {
 		position: relative;
 		padding-left: 40px;

@@ -20,17 +20,6 @@ textarea {
 	width: 100%;
 }
 
-.profile-picture-s {
-	width: 30px;
-	height: 30px;
-	border-radius: 50px;
-	border: 2px solid #fff;
-	box-shadow: 0 0 5px #B9B9B9;
-	background-color: #fff;
-	background-size: cover;
-	background-position: center center;
-}
-
 .profile-picture-m {
 	width: 70px;
 	height: 70px;
@@ -49,7 +38,5 @@ textarea {
 	border: 3px solid #fff;
 	box-shadow: 0 0 5px #B9B9B9;
 	background-color: #fff;
-	background-size: cover;
-	background-position: center center;
 }
 

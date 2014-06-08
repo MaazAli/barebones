@@ -1,8 +1,8 @@
 <template name="comment_submission_form">
 
-	
-	<img class="comment-profile-pic" src="{{get_user_profile_picture currentUser._id}}" alt="{{currentUser.username}}" />
-	
+	<div class="comment-side">	
+		<div class="profile-picture-s" style="background-image: url('{{get_user_profile_picture currentUser._id}}')" alt="{{currentUser.username}}"></div>
+	</div>
 
 	<div class="comment-main">
 		<textarea id="comment_input_{{_id}}" class="comment-submission-input form-control" rows="1" placeholder="Write a comment..."></textarea>
@@ -19,7 +19,9 @@
 <template name="comment_display">
 
 	<div class="comment-display-wrapper">
-		<img class="comment-profile-pic" src="{{get_user_profile_picture this.user_id}}" alt="{{this.username}}" />
+		<div class="comment-side">
+			<div class="profile-picture-s" style="background-image: url('{{get_user_profile_picture this.user_id}}');" alt="{{this.username}}"></div>
+		</div>
 
 		<div class="comment-main">
 			<div class="comment-content">
