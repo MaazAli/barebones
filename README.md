@@ -1,4 +1,4 @@
-bearbones
+barebones
 =========
 A simple question and answering web app.
 
