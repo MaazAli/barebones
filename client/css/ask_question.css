@@ -10,7 +10,10 @@
 
 .content-preview {
 	background-color: #fff;
-	padding: 20px;
+	padding: 6px 12px;
 	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 	border-radius: 3px;
+	word-wrap: break-word; 
+	height: 250px; 
+	overflow-y: auto;
 }

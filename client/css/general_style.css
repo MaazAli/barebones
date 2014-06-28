@@ -1,6 +1,7 @@
 body, h1, h2, h3, h4, h5, h6 {
 	font-family: Open Sans, sans-serif;
 	color: #5C5C5C;
+	margin-top: 10px;
 }
 
 body {
@@ -53,3 +54,8 @@ textarea {
 	background-position: center center;
 }
 
+
+/* overwrite markdown styling for code */
+code {
+	white-space: pre-wrap;
+}

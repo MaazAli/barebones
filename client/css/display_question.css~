@@ -1,11 +1,11 @@
 
 .post-wrapper {
 	position: relative;
-	padding: 20px;
+	padding: 20px 30px;
 	box-shadow: 1px 1px 3px #BEBEBE;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
-	margin-bottom: 20px;
+	margin: 20px 0;
 	border: 1px solid rgba(221, 221, 221, 0.62);
 	transition: all 0.3s ease-in-out;
 	-moz-transition: all 0.3s ease-in-out;
@@ -21,7 +21,7 @@
 }
 
 .post-main {
-	padding-left: 80px;
+	padding-left: 100px;
 }
 
 	.post-content {
@@ -48,7 +48,7 @@
 .post-action-bar {
 	position: absolute;
 	bottom: 0;
-	left: 100px;
+	left: 130px;
 	padding: 5px 0;
 	background-color: #fff;
 }
@@ -90,7 +90,7 @@
 
 .post-username {
 	font-size: 16px;
-	margin-bottom: 0px;
+	margin-bottom: 10px;
 	font-weight: 700;	
 }
 

@@ -1,3 +1,6 @@
+
+
+
 Template.answer_submission_form.events = {
 	'click #post_answer_button' : function(event) {
 		var min_answer_content = 20;
@@ -77,6 +80,9 @@ Template.display_question.events({
 			}
 		});
 
+	},
+	'scroll window': function(event) {
+		console.log('I am scrolling');
 	}
 });
 
@@ -323,6 +329,9 @@ Template.display_question.alreadyAnswered = function() {
 
 Template.display_question.rendered = function() {
 
+	// Insert question title into the header 
+	$('#header_question_title').html(this.data.title);
+	$('#site_title').html('<i class="fa fa-cubes"></i>');
 
 	if (this.data.best_answer != '') {
 		$('.best-answer-handler').removeClass('best-answer-selected');
