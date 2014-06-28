@@ -21,15 +21,15 @@ Proposed structure for influence points
 - Implemented
 
 
--------------------------------
+----
 
 Alert Actions: 
-	- Likes your content
-	- Comment on your content
-	- Upvote your content
-	- Downvote your content
-	- Follows you
-	- Post's on your profile
-	- Answers your question
+* Likes your content
+* Comment on your content
+* Upvote your content
+* Downvote your content
+* Follows you
+* Post's on your profile
+* Answers your question
 
--------------------------------
+----
